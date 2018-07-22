@@ -1,0 +1,21 @@
+ghost-x-pos = 0001
+pacman-x-pos = 0002
+ghost-y-pos = 0003
+pacman-y-pos = 0004
+lives = 0005
+
+load the value 0x0001 into the address register
+set MSB=T, a=T, c1=T, c2=T, c3=F, c4=F, c5=F, c6=F, d1=F, d2=T, d3=F
+load the value 0x0002 into the address register
+set MSB=T, a=T, c1=F, c2=T, c3=F, c4=F, c5=T, c6=T, d1=F, d2=F, d3=F (subtract data register from address register)
+if the zero bit is set on the ALU, then ghost-x-pos = pacman-x-pos
+
+load the value 0x0003 into the address register
+set MSB=T, a=T, c1=T, c2=T, c3=F, c4=F, c5=F, c6=F, d1=F, d2=T, d3=F
+load the value 0x0004 into the address register
+set MSB=T, a=T, c1=F, c2=T, c3=F, c4=F, c5=T, c6=T, d1=F, d2=F, d3=F (subtract data register from address register)
+if the zero bit is set on the ALU, then ghost-y-pos = pacman-y-pos
+
+
+load the value 0x0005 into the address register
+set MSB=T, a=T, c1=T, c2=T, c3=F, c4=F, c5=T, c6=F, d1=F, d2=F, d3=T (subract 1 from lives in memory)

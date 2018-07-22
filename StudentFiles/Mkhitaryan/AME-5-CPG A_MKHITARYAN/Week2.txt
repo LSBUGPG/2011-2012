@@ -1,0 +1,11 @@
+Asteroids (ATARI 1979)
+
+1. if (player-shifts-joystick-left) then {ship-rotates-left;}
+2. if (player-shifts-joystick-right) then {ship-rotates-right;}
+3. if (player-press-button) then {ship-thrusts;}
+4. if (player-press-button) then {ship-fires-weapon;}
+5. if (ship-hits-asteroid) then {asteroid-destroyed;}
+6. if (ship-hits-asteroid || ship-hits-saucer && ship-is-hit-by-saucer) then {ship-is-destroyed;}
+7. if (ship-hits-asteroid) then {player-scores-50-points;}
+8. if (ship-destroyed) then {ship-retuns-to-centre screen && one-life-is-taken;}
+9. if (all-ship-lives-taken) then {game-restarts;}

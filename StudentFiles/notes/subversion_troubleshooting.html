@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD html 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<title>Subversion troubleshooting</title>
+	<link rel="stylesheet" title="plain" type="text/css" href="plain.css" />
+	<link rel="alternate stylesheet" title="colour" type="text/css" href="colour.css"/>
+</head>
+<body>
+	<h1>Subversion troubleshooting</h1>
+	<h2>Problem with Tortoise on Windows 7</h2>
+	<p>Windows 7 has a feature that constantly monitors and indexes your files as you create and modify them. Unfortunately this causes problems for programs that rapidly create, open, modify, and move files around. Tortoise SVN is such a program.</p>
+<p>If you experience constant errors while trying to update or submit files through Tortoise, try turning off the indexing service on any linked folders.</p>
+<h2>Turning off Windows indexing</h2>
+<p>To turn off the windows indexing service:<ul>
+<li>Open the Windows Control Panel.</li>
+<li>Choose "View by: Small icons" to get the full list of options.</li>
+<li>Click on the "Indexing Options" entry.<br />
+<img src="control_panel_indexing.jpeg" /></li>
+<li>On the next screen, select the "Users" folder.</li>
+<li>Then click the modify button.<br />
+<img src="indexing_options.jpeg" /></li>
+<li>On the next screen, open the folders to find your data.</li>
+<li>Deselect any folders you have linked to source control.</li>
+<li>Finally, click on the OK button.<br />
+<img src="indexing_locations.jpeg" /></li></ul></p>
+<p>This should reduce the amount of errors you get when updating and submitting files through Tortoise SVN.</p>
+</body>
+</html>

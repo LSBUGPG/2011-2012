@@ -1,0 +1,35 @@
+Week 11 OOP Exercise
+
+Scripts:
+
+BarrierControl: No frills here, you hit the "space" key and the barrier kills itself; releasing
+the balls.
+
+BouncingBall: Initially I intended for the balls to change colour on collision, 
+but i found this very difficult to implement. At this current point in time,
+the ball's colour changes to green after 15 "seconds". If I were to re-write this script,
+I would write an array for the colours and get the balls to chnage colour on collision or
+after different periods of time had elapsed.
+
+DynamiteBall: The balls "explode" (destroy themselves and instantiate a particle effect in their
+respective place) if the user presses the "e" key. If I were to re-write this script, I 
+would have some sort of visual timer indicating how long before the ball would explode.
+
+DuplicatingBall: The balls instantiate a large number of clones when the user presses the 
+"e" key. I would like to have had more control over the number of clones that would be instantiated,
+however i found the implementation of a random range difficult to script on a key press.
+
+ExplosionBall: The balls "explode" after 13 "seconds", I would have preferred them to have
+exploded upon collision with the other balls, perhaps affecting their trajectory.
+
+Estimate:
+
+Task	Size	Reference	Velocity	Estimate	Actual
+
+Create an example of OOP in Unity	10	10	1	1:00:00	2:00:00
+					
+Exercise:
+
+Date	Exercise	Exercise ID	Start	End	Interruption(s)	Hours (taken)
+
+May 9, 2012	Create an example of OOP in Unity	10	20:38:00	22:38:00	0:00:00	2.00

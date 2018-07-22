@@ -1,0 +1,24 @@
+Data stored in RAM:
+
+0x0000 ball-x-position
+0x0001 ball-y-position
+
+
+has the ball hit top of the screen? (ball-y-position >= 480)
+
+set MSB=F number=0x01E0
+set MSB=T a=F c=TTFFFF d=FTF
+set MSB=F number=0x0001
+set MSB=T a=T c=FFFTTT d=FFF
+result is true if negative=F
+
+
+has the ball hit left of the screen? (ball-x-position >= 180)
+
+set MSB=F number=0B40
+set MSB=T a=F c=TTFFFF d=FFF
+
+has the ball hit right of the screen? (ball-x-position >= 180)
+
+set MSB=T number=0B40
+set MSB=T a=T c=FFTTFF d=FFF

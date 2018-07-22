@@ -1,0 +1,30 @@
+.data
+
+ 	
+	alien_x_position
+ 	shot_y_velocity
+ 	spaceship_x_position
+
+
+
+.code
+
+alien_x_postion_shot_pos_x:
+
+	           
+load  b, shot_x_pos          ;load the address of shot_x_pos to the 'b' register
+load  a, spaceship_x_pos     ;load the address of spaceship_x_pos to the 'a' register
+load  c, shot_loop           ;load the ROM address of "shot_loop" code to the 'c' register
+                             
+
+update_position:
+              
+
+load  a, shot_y_velocity_speed          ;shot-y-velocity update speed
+load  b, shot_y_velocity                ;load the adress of shot_y_velocity to the 'b' register
+mov   b, c spaceship_x_position         ;move spaceship_x_position update to 'c' register
+load  d, alien_x_position               ;load update alien_x_position to 'd' register
+mov   c, a shot_loop                    ;move the adress of "shot-loop" to 'a' register
+	                               
+
+.end

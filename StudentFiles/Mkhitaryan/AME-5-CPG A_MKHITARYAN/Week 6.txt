@@ -1,0 +1,17 @@
+RAM   :
+0x0000: player-y-position
+0x0001: player-y-velocity
+0x0002: player-position
+
+ROM   : code
+0x0000: 0x0000     input player-y-position
+0X0001: 0x0001     input player-y-velocity
+0x0002: 0xEC10     update player-y-position
+0x0003: 0x0010     write ROM address of "invert player-y-position" code to address register
+
+
+                   update player's position
+0x0005: 0x0001     input player-y-position
+0x0006: 0xFC10     
+0X0007: 0X0000     input player-y-position
+0X0008: 0XF088     player-y-position = player-y-position + player-y-velocity

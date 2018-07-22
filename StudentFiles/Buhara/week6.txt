@@ -1,0 +1,22 @@
+'Space Invaders'
+
+RAM   :
+
+0x0000: alien-x-position
+0x0001: shot-y-velocity
+0x0002: spaceship-x-position
+
+ROM   : code
+
+0x0000: 0x0000     write the address of alien_x_pos to the address register
+0X0001: 0x0001     write the address of shot_x_pos to the data register
+0x0002: 0xEC10     write the address of spaceship_x_pos to the address register
+0x0003: 0x0010     write ROM address of "shot-loop" code to address register
+0x0004: 0xF1C2     jump to adress "shot-loop" if 0
+
+                   shot-y-velocity update speed
+0x0005: 0x0001     shot-y-velocity
+0x0006: 0xFC10     spaceship-x-position update
+0X0007: 0X0000     update alien-x-position 
+0X0008: 0XF088     write the adress of "shot-loop" to data register
+0x0009: 0xF4D0	   jump to "spaceship-x-position"

@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+  <head>
+    <title>Week 4 notes</title>
+    <style type="text/css">
+      table
+      {
+      border-collapse:collapse;
+      }
+      table, tr, th, td
+      {
+      border:1px solid black;
+      padding-left:8px;
+      padding-right:8px;
+      }
+    </style>
+    <link rel="stylesheet" title="plain" type="text/css" href="plain.css" />
+  </head>
+  <body>
+    <h2>Week 4 notes</h2>
+    <p><ol>
+	<li>Recap<ul>
+	    <li><a href="week-02.html">week 2</a></li>
+	    <li><a href="week-03.html">week 3</a></li>
+	    <li>one thing I missed out, negating a binary number</li>
+	    <li>first, a bitwise NOT is almost right:<br />
+	      <img src="NOT4.png" /></li>
+	    <li>this makes a negative number from a positive one</li>
+	    <li>but it's not the right number</li>
+	    <li>check on the table of negative numbers:<br />
+	      <table>
+		<tr><th>decimal</th><th>binary</th></tr>
+		<tr><td>0</td><td>0000</td></tr>
+		<tr><td>1</td><td>0001</td></tr>
+		<tr><td>2</td><td>0010</td></tr>
+		<tr><td>3</td><td>0011</td></tr>
+		<tr><td>4</td><td>0100</td></tr>
+		<tr><td>5</td><td>0101</td></tr>
+		<tr><td>6</td><td>0110</td></tr>
+		<tr><td>7</td><td>0111</td></tr>
+		<tr><td>-8</td><td>1000</td></tr>
+		<tr><td>-7</td><td>1001</td></tr>
+		<tr><td>-6</td><td>1010</td></tr>
+		<tr><td>-5</td><td>1011</td></tr>
+		<tr><td>-4</td><td>1100</td></tr>
+		<tr><td>-3</td><td>1101</td></tr>
+		<tr><td>-2</td><td>1110</td></tr>
+		<tr><td>-1</td><td>1111</td></tr>
+	    </table></li>
+	    <li>what do we need to do to correct it?</li>
+	    <li>this is called taking the two's complement</li>
+	    <li>16 bit negate:<br />
+	      <br /><img src="NEG16.png" /></li>
+	    <li>or more briefly:<br />
+	      <br /><img src="NEG16.2.png" /></li>
+	</ul></li>
+	<li>Evaluating game rules:<ul>
+	    <li>take a rule from a game design and encode as a circuit</li>
+	    <li>eg. if (ball-off-top || ball-off-bottom) then {bounce-ball-vertically;}</li>
+	    <li>assume a screen 480 pixels high with 0 at the bottom</li>
+	    <li>ball-off-top means:<ul>
+		<li>ball-y-pos &gt;= 480, or</li>
+		<li>(ball-y-pos - 480) &gt;= 0<br />
+		  <br /><img src="ball-off-top.png" /></li></ul></li>
+	    <li>ball-off-bottom means:<ul>
+		<li>ball-y-pos &lt; 0<br />
+		  <br /><img src="ball-off-bottom.png" /></li></ul></li>
+	    <li>bounce-ball-vertically means negate ball-y-velocity</li>
+	    <li>output is either ball-y-velocity or -(ball-y-velocity)</li>
+	    <li>use a multiplexer <a href="MUX2.png">MUX</a> circuit to make the selection</li>
+	    <li>short hand for a 16 bit multiplexer:<br />
+	      <br /><img src="MUX16.png" /></li>
+	    <li>putting it together:<br />
+	      <br /><img src="bounce.png" /></li>
+	</ul></li>
+	<li>loops<ul>
+	    <li>game are infinite loops</li>
+	    <li>can we loop the output back into the input?<br />
+	      <br /><img src="update-bad.png" /></li>
+	    <li>problems:<ul>
+		<li>when can we sample new ball position?</li>
+		<li>what happens if the state has not settled?</li>
+		<li>need to hold the result for some engineered time</li>
+		<li>this is known as state</li>
+	    </ul></li>
+	    <li>the data flip flop (DFF):<br />
+	      <br /><img src="DFF.png" /></li>
+	    <li>combine with MUX for a 1 bit register:<br />
+	      <br /><img src="bit.png" /></li>
+	    <li>combine 16 bits to make 1 16 bit register:<br />
+	      <br /><img src="register.png" /></li>
+	    <li>finally we can encode our cycle:<br />
+	      <br /><img src="update.png" /></li>
+<li><a href="http://www.humansinvent.com/#!/4106/game-changing-prototypes-3-the-brown-box/">console built from components</a></li>
+	</ul></li>
+	<li>memory<ul>
+	    <li>combine registers with MUX for RAM:<br />
+	      <br /><img src="RAM.png" /></li>
+	    <li>double up or use higher selector multiplexers to expand</li>
+	    <li>selector bits decide which byte to read or write</li>
+	</ul></li>
+	<li>Exercise<ul>
+	    <li>take a rule from a game that needs to cycle</li>
+	    <li>eg. pick a rule from your exercise in week 2</li>
+	    <li>design a circuit to encode the rule</li>
+	    <li>to feed an output to an input, use a register</li>
+	    <li>you can use any software you want</li>
+	    <li>you can draw it on paper if you prefer</li>
+	    <li>output as JPEG or PNG format</li>
+	    <li>check in the image and your work log</li>
+	    <li>4pm next Tuesday</li></ul></li></ol></p>
+  </body>
+</html>

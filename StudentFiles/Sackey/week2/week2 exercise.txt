@@ -1,0 +1,19 @@
+Game: Pac Man
+
+Controls:
+if(PlayerControllerUp && !WallUp) then {Move PacmanUp;}
+if(PlayerControllerDown && !WallDown) then {Move PacmanDown;}
+if(PlayerControllerLeft && !WallLeft) then {Move PacmanLeft;}
+if(PlayerControllerRight && !WallRight) then {Move PacmanRight;}
+
+PacMan:
+if(PlayerGameStart) then {pacmanAlive;}
+if(pacman && !Lives>0) then {GameOver;}
+if(pacman && Lives>0) then {respawn pacman;}
+if(ghost eats pacman) then {!pacmanAlive;}
+if(!pacanAlive) then {Live-1;}
+if(pacmanEatsPowerpill && <10Seconds) then {Superpac and Aviodpacman;}
+if(SuperPac && CollideWithGhost) then {pacman eats ghost;}
+if(!SuperPac && CollideWithGhost) then {ghost eats pacman;}
+if((pacman || Supac) && collidewithPill) then {pillDisappears;}
+if(AllpillDisappears) then {levelComplete;}

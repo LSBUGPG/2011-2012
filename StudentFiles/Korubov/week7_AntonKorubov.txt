@@ -1,0 +1,32 @@
+.data
+	pacman_x_position 	word 0
+	ghost_x_position	word 0
+	pacman_y_position	word 0
+	ghost_y_position	word 0
+	life 			word 0
+
+.code
+x_position
+	la a, pacman_x_pos	;load address of data "pacman_x_position" to register "a"
+	mov d, [a]		;move value at address "a" to tegister "d"
+	la a, ghost_x_pos	;load address of data "ghost_x_position" to register "a"
+	sub d, a		;substract register "a" from "d" and store the result in register "d"
+	la a, end_of_loop	;load address of code "end_of_loop" to register "a"
+	jne a			;jump to address "a" if register "d" is <0 ord >0
+
+y_position
+	la a, pacman_y_pos	;load address of data "pacman_y_position" to register "a"
+	mov d, [a]		;move value at address "a" to tegister "d"
+	la a, ghost_y_pos	;load address of data "ghost_y_position" to register "a"
+	sub d, a		;substract register "a" from "d" and store the result in register "d"
+	la a, end_of_loop	;load address of code "end_of_loop" to register "a"
+	jne a			;jump to address "a" if register "d" is <0 ord >0
+
+substract_life
+	la a, life		;load address of data "life" to register "a"
+	dec b, [a]		;decrement value in register "a" by 1 and store the result in register "b"
+
+end_of_loop
+	la a, x_position	;load address of code "x_position" to register "a"
+	jmp a			;jump to register "a"
+	

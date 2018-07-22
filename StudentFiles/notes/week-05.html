@@ -1,0 +1,261 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+  <head>
+    <title>Week 5 notes</title>
+    <style type="text/css">
+      table
+      {
+      border-collapse:collapse;
+      }
+      table, tr, th, td
+      {
+      border:1px solid black;
+      padding-left:8px;
+      padding-right:8px;
+      }
+      th, td
+      {
+      min-width: 2em;
+      }
+    </style>
+    <link rel="stylesheet" title="plain" type="text/css" href="plain.css" />
+  </head>
+  <body>
+    <h2>Week 5 notes</h2>
+    <ol>
+      <li>Recap<ul>
+	  <li><a href="week-02.html">week 2</a>: Boolean logic</li>
+	  <li><a href="week-03.html">week 3</a>: Numbers and other data types</li>
+	  <li><a href="week-04.html">week 4</a>: Memory, registers, and loops</li>
+	  <li>we can now design games by encoding their rules in hardware</li>
+	  <li>disadvantages of building games this way?</li>
+      </ul></li>
+      <br/>
+      <li>Programmable circuits<ul>
+	  <li>what is a programmable circuit?</li>
+	  <li>the MUX circuits we've been using are one example</li>
+	  <li>an example is the design of a block of RAM:<br />
+	    <br /><img src="RAM.png" /></li>
+	  <li>note: the new notation to tidy up crossing lines</li>
+	  <li>as that's quite complicated, we can abbreviate it:<br />
+	    <br /><img src="RAM2.png" /></li>
+	  <li>the inputs, in the top, program the chip:<ul>
+	      <li>select which register to take input and give output
+		<br />(programmed as the number of the register in bits)</li>
+	      <li>to load or not load from the input
+		<br />(programmed by the load input line)</li>
+	  </ul></li>
+	  <li>we could attach:<ul>
+	      <li>a line of switches to the inputs (address, in, load)</li>
+	      <li>a line of LEDs to the outputs</li>
+	  </ul></li>
+	  <li>switching the bits on the "address" input would cause the LEDs to reflect the current value of the register</li>
+	  <li>switching the bits on the "in" input and pushing "load" would store the combination of switches in memory</li>
+	  <li>early computers were programmed this way</li>
+	  <li>the PS3 development kits have programmer switches on the front for debugging</li>
+	  <li>we can choose a different programmable address for each value we want to hold, e.g.<br />
+	    <br />
+	    <table>
+	      <tr><th colspan="4">address</th><th rowspan="2">value</th></tr>
+	      <tr><th rowspan="1">hexadecimal</th><th colspan="3">binary inputs</th></tr>
+	      <tr><td>0</td><td>0</td><td>0</td><td>0</td><td>ball-x-position</td></tr>
+	      <tr><td>1</td><td>0</td><td>0</td><td>1</td><td>ball-y-position</td></tr>
+	      <tr><td>2</td><td>0</td><td>1</td><td>0</td><td>ball-x-velocity</td></tr>
+	      <tr><td>3</td><td>0</td><td>1</td><td>1</td><td>ball-y-velocity</td></tr>
+	      <tr><td>4</td><td>1</td><td>0</td><td>0</td><td>player-1-paddle-y</td></tr>
+	      <tr><td>5</td><td>1</td><td>0</td><td>1</td><td>player-2-paddle-y</td></tr>
+	      <tr><td>6</td><td>1</td><td>1</td><td>0</td><td>player-1-score</td></tr>
+	      <tr><td>7</td><td>1</td><td>1</td><td>1</td><td>player-2-score</td></tr>
+	  </table></li>
+	  <br />
+	  <li>and we can scale this up to however much RAM we need</li>
+	  <li>we could also join this to a programmable logic circuit:<br />
+	    <br /><img src="programmable-logic.png" /></li>
+	  <br />
+	  <li>with this arrangement we can apply any programmable logical operation to a programmable register in memory</li>
+      </ul></li>
+      <br/>
+      <li>The arithmetic logic unit (ALU)<ul>
+	  <li>there are many approaches we could take</li>
+	  <li>this one is from the book The Elements of Computing Systems: <br />
+	    <br /><img src="ALU.png" /></li>
+	  <li>it has 6 instruction input lines giving it 64 possible operations:<ul>
+	      <li>the "0&rarr;A" line selects between the given input or 0 as input A</li>
+	      <li>the "0&rarr;B" line selects between the given input or 0 as input B</li>
+	      <li>the "~A" line selects whether to apply bit-wise NOT to input A</li>
+	      <li>the "~B" line selects whether to apply bit-wise NOT to input B</li>
+	      <li>the "add" line selects between bit-wise AND or addition of A and B</li>
+	      <li>the "~out" line selects whether to apply bit-wise NOT to the output</li>
+	  </ul></li>
+	  <li>note the use of "~" instead of "!" as the bit-wise NOT operation</li>
+	  <li>also "&amp;" means bit-wise AND and "|" means bit-wise OR, the double versions are only used for single bit Boolean values</li>
+	  <li>it has 2 16-bit inputs (I've named these A and B for consistency)</li>
+	  <li>it outputs the 16-bit result and two Boolean results:<ul>
+	      <li>the zero line is true if the output is zero</li>
+	      <li>the negative line is true if the output is negative</li>
+	    </ul><br /><img src="inside-ALU.png" /></li>
+	  <li>by programming the inputs, can we get all the following outputs?</li>
+	  <li>notes:<ul>
+	      <li>~A = -(A+1) = -A-1 (in two's complement binary representation)</li>
+	      <li>~(A&amp;B) = (~A)|(~B) (De Morgan's laws)</li>
+	      <li>~(A|B) = (~A)&amp;(~B)</li></ul><br />
+	    <br />
+	    <table>
+	      <tr><th>0&rarr;A</th><th>~A</th><th>0&rarr;B</th><th>~B</th><th>add</th><th>~out</th><th>result</th></tr>
+	      <tr><td><br /></td><td><br /></td><td><br /></td><td><br /></td><td><br /></td><td><br /></td><td>0</td></tr>
+	      <tr><td><br /></td><td><br /></td><td><br /></td><td><br /></td><td><br /></td><td><br /></td><td>1</td></tr>
+	      <tr><td><br /></td><td><br /></td><td><br /></td><td><br /></td><td><br /></td><td><br /></td><td>-1</td></tr>
+	      <tr><td><br /></td><td><br /></td><td><br /></td><td><br /></td><td><br /></td><td><br /></td><td>A</td></tr>
+	      <tr><td><br /></td><td><br /></td><td><br /></td><td><br /></td><td><br /></td><td><br /></td><td>B</td></tr>
+	      <tr><td><br /></td><td><br /></td><td><br /></td><td><br /></td><td><br /></td><td><br /></td><td>~A</td></tr>
+	      <tr><td><br /></td><td><br /></td><td><br /></td><td><br /></td><td><br /></td><td><br /></td><td>~B</td></tr>
+	      <tr><td><br /></td><td><br /></td><td><br /></td><td><br /></td><td><br /></td><td><br /></td><td>-A</td></tr>
+	      <tr><td><br /></td><td><br /></td><td><br /></td><td><br /></td><td><br /></td><td><br /></td><td>-B</td></tr>
+	      <tr><td><br /></td><td><br /></td><td><br /></td><td><br /></td><td><br /></td><td><br /></td><td>A+1</td></tr>
+	      <tr><td><br /></td><td><br /></td><td><br /></td><td><br /></td><td><br /></td><td><br /></td><td>B+1</td></tr>
+	      <tr><td><br /></td><td><br /></td><td><br /></td><td><br /></td><td><br /></td><td><br /></td><td>A-1</td></tr>
+	      <tr><td><br /></td><td><br /></td><td><br /></td><td><br /></td><td><br /></td><td><br /></td><td>B-1</td></tr>
+	      <tr><td><br /></td><td><br /></td><td><br /></td><td><br /></td><td><br /></td><td><br /></td><td>A+B</td></tr>
+	      <tr><td><br /></td><td><br /></td><td><br /></td><td><br /></td><td><br /></td><td><br /></td><td>A-B</td></tr>
+	      <tr><td><br /></td><td><br /></td><td><br /></td><td><br /></td><td><br /></td><td><br /></td><td>B-A</td></tr>
+	      <tr><td><br /></td><td><br /></td><td><br /></td><td><br /></td><td><br /></td><td><br /></td><td>A&amp;B</td></tr>
+	      <tr><td><br /></td><td><br /></td><td><br /></td><td><br /></td><td><br /></td><td><br /></td><td>A|B</td></tr>
+	    </table>
+	    <br />completed table:<br />
+	    <br /><table>
+	      <tr><th>0&rarr;A</th><th>~A</th><th>0&rarr;B</th><th>~B</th><th>add</th><th>~out</th><th>result</th></tr>
+	      <tr><td>T</td><td>F</td><td>T</td><td>F</td><td>F</td><td>F</td><td>0</td></tr>
+	      <tr><td>T</td><td>T</td><td>T</td><td>T</td><td>T</td><td>T</td><td>1</td></tr>
+	      <tr><td>T</td><td>T</td><td>T</td><td>F</td><td>T</td><td>F</td><td>-1</td></tr>
+	      <tr><td>F</td><td>F</td><td>T</td><td>T</td><td>F</td><td>F</td><td>A</td></tr>
+	      <tr><td>T</td><td>T</td><td>F</td><td>F</td><td>F</td><td>F</td><td>B</td></tr>
+	      <tr><td>F</td><td>F</td><td>T</td><td>T</td><td>F</td><td>T</td><td>~A</td></tr>
+	      <tr><td>T</td><td>T</td><td>F</td><td>F</td><td>F</td><td>T</td><td>~B</td></tr>
+	      <tr><td>F</td><td>F</td><td>T</td><td>T</td><td>T</td><td>T</td><td>-A</td></tr>
+	      <tr><td>T</td><td>T</td><td>F</td><td>F</td><td>T</td><td>T</td><td>-B</td></tr>
+	      <tr><td>F</td><td>T</td><td>T</td><td>T</td><td>T</td><td>T</td><td>A+1</td></tr>
+	      <tr><td>T</td><td>T</td><td>F</td><td>T</td><td>T</td><td>T</td><td>B+1</td></tr>
+	      <tr><td>F</td><td>F</td><td>T</td><td>T</td><td>T</td><td>F</td><td>A-1</td></tr>
+	      <tr><td>T</td><td>T</td><td>F</td><td>F</td><td>T</td><td>F</td><td>B-1</td></tr>
+	      <tr><td>F</td><td>F</td><td>F</td><td>F</td><td>T</td><td>F</td><td>A+B</td></tr>
+	      <tr><td>F</td><td>T</td><td>F</td><td>F</td><td>T</td><td>T</td><td>A-B</td></tr>
+	      <tr><td>F</td><td>F</td><td>F</td><td>T</td><td>T</td><td>T</td><td>B-A</td></tr>
+	      <tr><td>F</td><td>F</td><td>F</td><td>F</td><td>F</td><td>F</td><td>A&amp;B</td></tr>
+	      <tr><td>F</td><td>T</td><td>F</td><td>T</td><td>F</td><td>T</td><td>A|B</td></tr>
+	    </table>
+	  </li>
+      </ul></li>
+      <br />
+      <li>Directing inputs and outputs<ul>
+	  <li>as well as calculating results, we also need to control inputs and outputs</li>
+	  <li>if we just combine our RAM with our ALU we're missing an input:<br />
+	    <br /><img src="RAM-ALU.png" /></li>
+	  <li>we could add a data register to hold the other value</li>
+	  <li>then add another programmable switch to write the ALU out to it</li>
+	  <li>and another switch to write the ALU out to memory:<br />
+	    <br /><img src="RAM-ALU-REG.png" /></li>
+	  <li>we still need a way to load an address from an instruction</li>
+	  <li>loading a constant into the ALU would also be useful</li>
+	  <li>we can do both by adding an address register fed from the instruction bits:<br />
+	    <br /><img src="RAM-ALU-2REG.png" /></li>
+	  <li>there is now just one programmable instruction of 16 bits</li>
+	  <li>if the MSB of the instruction is off, then:<ul>
+	      <li>all switches are off except the write to the address register</li>
+	      <li>the value of the instruction is written to the address register</li>
+	      <li>other operations will still occur, but their results are ignored</li>
+	  </ul></li>
+	  <li>if the MSB of the instruction is on, then:<ul>
+	      <li>the switches are set from the corresponding bits in the instruction</li>
+	      <li>note: the "c" switches are in the same order as the ALU switches<br />
+		<br /><table>
+		  <tr><th>switch</th><th>state</th><th>effect</th></tr>
+		  <tr><td rowspan="2">a</td><td>off</td><td>the address register is the B input to the ALU</td></tr>
+		  <tr><td>on</td><td>a value from RAM is the B input to the ALU</td></tr>
+		  <tr><td rowspan="2">c1</td><td>off</td><td>the data register is the A input to the ALU</td></tr>
+		  <tr><td>on</td><td>the ALU selects 0 as its A input</td></tr>
+		  <tr><td rowspan="2">c2</td><td>off</td><td>nothing</td></tr>
+		  <tr><td>on</td><td>the ALU inverts its A input</td></tr>
+		  <tr><td rowspan="2">c3</td><td>off</td><td>nothing</td></tr>
+		  <tr><td>on</td><td>the ALU selects 0 as its B input</td></tr>
+		  <tr><td rowspan="2">c4</td><td>off</td><td>nothing</td></tr>
+		  <tr><td>on</td><td>the ALU inverts its B input</td></tr>
+		  <tr><td rowspan="2">c5</td><td>off</td><td>the ALU performs a bit-wise AND on its inputs</td></tr>
+		  <tr><td>on</td><td>the ALU performs addition on its inputs</td></tr>
+		  <tr><td rowspan="2">c6</td><td>off</td><td>nothing</td></tr>
+		  <tr><td>on</td><td>the ALU inverts its output</td></tr>
+		  <tr><td rowspan="2">d1</td><td>off</td><td>nothing</td></tr>
+		  <tr><td>on</td><td>the ALU output is written to the address register</td></tr>
+		  <tr><td rowspan="2">d2</td><td>off</td><td>nothing</td></tr>
+		  <tr><td>on</td><td>the ALU output is written to the data register</td></tr>
+		  <tr><td rowspan="2">d3</td><td>off</td><td>nothing</td></tr>
+		  <tr><td>on</td><td>the ALU output is written into RAM</td></tr>
+	      </table></li>
+	  </ul></li>
+      </ul></li>
+      <br />
+      <li>Worked examples<ul>
+	  <li>can I duplicate the mathematical operations of the circuits from week 4?</li>
+	  <li>ball-y-position - 480 &gt;= 0</li>
+	  <li>one way to do this:<ol>
+	      <li><ul>
+		  <li>load the value 480 into the address register</li>
+		  <li>I can encode this as 0x01E0</li>
+		  <li>the "0x" prefix indicates a hexadecimal number</li>
+		  <li>use the hexadecimal to binary table from <a href="week-03.html">week 3</a> to find the bit pattern</li>
+		  <li>0000 0001 1110 0000</li>
+	      </ul></li>
+	      <li><ul>
+		  <li>set MSB=T, a=F, c1=T, c2=T, c3=F, c4=F, c5=F, c6=F, d1=F, d2=T, d3=F</li>
+		  <li>the ALU will output 480, and the circuit will write it into the data register</li>
+	      </ul></li>
+	      <li><ul>
+		  <li>where is ball-y-position in memory?</li>
+		  <li>load the value 1 into the address register</li>
+		  <li>encoded as 0x0001 in hexadecimal</li>
+	      </ul></li>
+	      <li><ul>
+		  <li>set MSB=T, a=T, c1=F, c2=F, c3=F, c4=T, c5=T, c6=T, d1=F, d2=F, d3=F</li>
+		  <li>this will cause the ALU to output the value of B-A</li>
+		  <li>where B is the value of the register in RAM at memory address 0x0001</li>
+		  <li>and A is the data register (set to 480 in step 2)</li>
+		  <li>result: ball-y-position - 480</li>
+	      </ul></li><br />
+	      <li>if the "negative" output is not set on the ALU then that result is &gt;= 0</li>
+	  </ol></li>
+	  <br />
+	  <li>ball-y-position &lt; 0<ol><br />
+	      <li>load the value 0x0001 into the address register</li>
+	      <li>set MSB=T, a=T, c1=T, c2=T, c3=F, c4=F, c5=F, c6=F, d1=F, d2=F, d3=F</li>
+	      <li>if the "negative" output is set on the ALU then ball-y-position &lt; 0</li>
+	  </ol></li>
+	  <br />
+	  <li>negate ball-y-velocity<ol><br />
+	      <li>load the value 0x0003 into the address register</li>
+	      <li>set MSB=T, a=T, c1=T, c2=T, c3=F, c4=F, c5=T, c6=T, d1=F, d2=F, d3=T</li>
+	  </ol></li>
+	  <br />
+	  <li>add ball-y-velocity to ball-y-position<ol><br />
+	      <li>load the value 0x0003 into the address register</li>
+	      <li>set MSB=T, a=T, c1=T, c2=T, c3=F, c4=F, c5=F, c6=F, d1=F, d2=T, d3=F</li>
+	      <li>load the value 0x0001 into the address register</li>
+	      <li>set MSB=T, a=T, c1=F, c2=F, c3=F, c4=F, c5=T, c6=F, d1=F, d2=F, d3=T</li>
+	  </ol></li>
+      </ul></li>
+      <br />
+      <li>Exercise<ul>
+	  <li>take your circuit designs from last week</li>
+	  <li>identify the registers you would need</li>
+	  <li>name each register and give it an address</li>
+	  <li>identify the calculations needed</li>
+	  <li>list out the instructions you'd need to perform the calculations</li>
+	  <li>ignore conditional code for now (we'll come back to that next week)</li>
+	  <li>keep track of the time it takes you to encode your first calculation</li>
+	  <li>make an estimate of your remaining time</li>
+	  <li>ignore schedule requirement</li>
+	  <li>create your instructions in a text file</li>
+	  <li>check in your work log, estimates, and instructions</li>
+	  <li>4pm next Tuesday</li>
+      </ul></li>
+    </ol>
+  </body>
+</html>

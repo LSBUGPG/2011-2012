@@ -1,0 +1,67 @@
+Final Game Project Estimates and Work Schedule
+
+Tasks
+
+1: Create all prefabs
+
+To be completed by: week 9
+
+Estimate time to complete task: 2 days
+
+Actual time taken: 3 hours
+
+2: Place all prefabs, arrange scenes and begin coding
+
+To be completed by: week 9
+
+Estimate time to complete task: 1 day
+
+Actual time taken: 3 hours
+
+3: Script projectile behaviours
+
+To be completed by: week 10
+
+Estimate time to complete task: 1 day
+
+Actual time taken: 1 day
+
+4: Script time and score GUI
+
+To be completed by: week 10
+
+Estimate time to complete task: 1 day
+
+Actual time taken: 4 hours
+
+5: Script boss fight
+
+To be completed by: week 10
+
+Estimate time to complete task: 5 hours
+
+Actual time taken: 3 hours
+
+6: Script no-fly zones
+
+To be completed by: week 11
+
+Estimate time to complete task: 1 hour
+
+Actual time taken: 3 hours
+
+7: Compile and begin debugging
+
+To be completed by: week 11
+
+Estimate time to complete task: 3 days
+
+Actual time taken: 1 day
+
+8: Submit final project
+
+To be completed by: 15th May 2012
+
+Estimate time to complete task: 1 week
+
+Actual time taken: 3 days

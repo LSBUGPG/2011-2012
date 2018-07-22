@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+  <head>
+    <title>Week 10 notes</title>
+    <style type="text/css">
+      table
+      {
+      border-collapse: collapse;
+      }
+      table, tr, th, td
+      {
+      border: 1px solid black;
+      padding-left: 8px;
+      padding-right: 8px;
+      }
+      th, td
+      {
+      min-width: 2em;
+      }
+      pre
+      {
+      border-style: solid
+      }
+      .comment
+      {
+      color: green;
+      }
+    </style>
+    <link rel="stylesheet" title="plain" type="text/css" href="plain.css" />
+  </head>
+  <body>
+    <h2>Week 10 notes</h2>
+    <ol>
+      <li><h3>Recap</h3><ul>
+	  <li><a href="week-02.html">week 2</a>: Boolean logic</li>
+	  <li><a href="week-03.html">week 3</a>: numbers and other data types</li>
+	  <li><a href="week-04.html">week 4</a>: memory, registers, and loops</li>
+	  <li><a href="week-05.html">week 5</a>: programmable circuits</li>
+	  <li><a href="week-06.html">week 6</a>: machine code</li>
+	  <li><a href="week-07.html">week 7</a>: assembler</li>
+	  <li><a href="week-08.html">week 8</a>: 3rd generation languages</li>
+	  <li><a href="week-09.html">week 9</a>: modules, libraries, and linking</li>
+	  <li>review modules version of Pong</li>
+      </ul></li>
+      <li><h3>Game engines and virtual machines</h3><ul>
+	  <li><h4>virtual machines</h4><ul>
+	      <li>what are virtual machines?</li>
+	      <li>how would you build one?</li>
+	      <li>advantages</li>
+	      <li>disadvantages</li>
+	  </ul></li>
+	  <li><h4>time slicing</h4><ul>
+	      <li>multiple concurrent virtual machines</li>
+	      <li>how to emulate on a single processor?</li>
+	  </ul></li>
+	  <li><h4>high level libraries</h4><ul>
+	      <li>a look back on the modules exercise</li>
+	      <li>how re-usable modules evolve into high level libraries:<ul>
+		  <li>2D and 3D rendering</li>
+		  <li>physics</li>
+		  <li>audio</li>
+		  <li>AI and path-finding</li>
+	      </ul></li>
+	  </ul></li>
+	  <li><h4>game engines</h4><ul>
+	      <li>the next level of modularization</li>
+	      <li>general purpose vs specific purpose</li>
+	      <li>performance</li>
+	      <li>levels of customization</li>
+	      <li>cross platform support</li>
+	      <li>tool support</li>
+	      <li>on line support</li>
+	      <li>community support</li>
+	      <li>paid support</li>
+	      <li>compatibility</li>
+	      <li>scripting</li>
+	  </ul></li>
+	  <li><h4>the update function</h4><ul>
+	      <li>game loop content</li>
+	      <li>one call per object per update</li>
+	      <li>synchronous or asynchronous?</li>
+	      <li>in either case, how much time has passed?</li>
+	  </ul></li>
+	  <li><h4>Unity</h4><ul>
+	      <li>balance of game engine considerations</li>
+	      <li>object simulator</li>
+	      <li>many simultaneous virtual machines</li>
+	      <li>allows object oriented scripting</li>
+	  </ul></li>
+      </ul></li>
+      <li><h3>Worked example</h3><ul>
+	  <li>taking Pong again as example:<ul>
+	      <li>split program into objects<ul>
+		  <li>paddles</li>
+		  <li>ball</li>
+		  <li>net / court</li>
+		  <li>scores</li>
+	      </ul></li>
+	  </ul></li>
+      </ul></li>
+      <li><h3>Exercise</h3><ul>
+	  <li>re-implement your code from previous exercises as Unity objects</li>
+	  <li>for each object you identify, create a Unity object</li>
+	  <li>write a script for each object and assign it</li>
+	  <li>write Start and Update functions to implement your logic</li>
+	  <li>export your scene, objects, and scripts, as a Unity package</li>
+	  <li>check in your work log and Unity package</li>
+	  <li>4pm next Tuesday</li>
+      </ul></li>
+    </ol>
+  </body>
+</html>

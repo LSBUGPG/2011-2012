@@ -1,0 +1,30 @@
+.data
+	ghost_x_pos word ?
+	pacman_x_pos word ?
+	ghost_y_pos word ?
+	pacman_y_pos word ?
+	
+.code
+start:
+	la a, ghost_x_pos 	; (write the address of the ghost-x-pos to address register)
+	mov d, [a] 		; (write ghost-x-pos to data register)
+	la a, pacman_x_pos 	; (write the address of the pacman-x-pos to address register)
+	sub d, [a], d 		; (subtract data register from address register)
+	la a, finish 		; (address of finish to address register)
+	jne a 			; (jump to end if data register != 0)
+
+	la a, ghost_y_pos 	; (write the address of the ghost-y-pos to address register)
+	mov d, [a] 		; (write ghost-y-pos to data register)
+	la a, pacman_y_pos 	; (write the address of the pacman-x-pos to address register)
+	sub d, [a], d 		; (subtract data register from address register)
+	la a, finish 		;
+	jne a 			; (jump to end if data register != 0)
+
+	la a, lives 		; (write the address of the lives to the address register)
+	dec a, [a] 		; (subtract 1 from lives in adress register)
+
+finish:
+	la a, start 		; (address of start to address register)
+	jmp a 			; (jump to start)
+
+end

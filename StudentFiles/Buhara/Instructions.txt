@@ -1,0 +1,8 @@
+
+- Player controlls pacman
+
+
+-Player moves pacman right or left >MSB> if player hits wall pacman stops moving > if player carry's on & scoring(reigster) moving horizontally > player carrys on next stage if scored > game over if attacked
+
+
+-Player controlls pacman down > scoring (register) > if player moves vertically and hits wall player stops.

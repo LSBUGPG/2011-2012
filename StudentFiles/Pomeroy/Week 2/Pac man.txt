@@ -1,0 +1,26 @@
+
+
+Pac-Man
+
+Token = Pac-man
+
+Controls:
+
+if(Button-Up_&&_!obsticleUp)then{Move_TokenUp;}
+if(Button-Down_&&_!obsticleDown)then{Move_TokenDown;}
+if(Button-Left_&&_!obsticleLeft)then{Move_TokenLeft;}
+if(Button-Right_&&_!obsticleRight)then{Move_TokenRight;}
+
+PacMan:
+
+if(Start)then{Token_life;}
+if(Token_&&_Lives>0)then{respawn_Token;}
+if(ghost_"eats"_Token)then{!Token_life;}
+if(!Token_life)_then_{Life-1;}
+if(Powerpip_&&_<10Seconds)then{Pac_man;}
+if(Pac_man_&&_CollideWithGhost)then{Pac_man_"eats"_ghost;}
+if(Pac_man_"eats"_ghost)then{ghost_dissapears}
+if(Token_&&_CollideWithGhost)then{ghost_"eats"_Token;}
+if(Token_&&_collidewithPill)then{Token_"eats"_pill_pill_dissapears;}
+if(AllpillDisappear)then{levelComplete_Player_Win;}
+if(pacman_&&_!Lives>0)then{GameOver_Player_Loose;}

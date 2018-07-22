@@ -1,0 +1,17 @@
+BITMAP 16 16
+
+07 80
+1f e0
+3f f0
+73 c8
+61 c0
+61 c0
+e1 88
+f3 cc
+ff fc
+ff fc
+ff fc
+ff fc
+f7 bc
+63 18
+00 00

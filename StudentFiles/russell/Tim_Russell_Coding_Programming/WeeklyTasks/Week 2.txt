@@ -1,0 +1,31 @@
+Flashback 1992
+
+Movement:
+
+if (player-moves-left-off-screen || player-moves-right-off-screen || player-moves-up-off-screen || player-moves-down-off-screen) then {move-camera-to-player-position;}
+if (player-uses-left-key && !into-object) then {player-walks-left;}
+if (player-uses-right-key && !into-object) then {player-walks-right;}
+if ((player-uses-left-key && player-uses-run-key) && !into-object) then {player-runs-left;}
+if ((player-uses-right-key && player-uses-run-key) && !into-object) then {player-runs-right;}
+if (player-uses-jump-key && !jumping) then {player-jumps;}
+if (((player-is-running-left && player-uses-jump-key) && !into-object) && !jumping) then {player-long-jumps-left;}
+if (((player-is-running-right && player-uses-jump-key) && !into-object) && !jumping) then {player-long-jumps-right;}
+if ((player-uses-down-key && player-uses-left-key) && !into-object) then {player-rolls-left;}
+if ((player-uses-down-key && player-uses-right-key) && !into-object) then {player-rolls-right;}
+if (((player-uses-jump-key && player-holds-grab-key) && player-faces-left-grab-ledge || player-faces-right-grab-ledge) && !jumping) then {player-will-jump-and-grab-ledge;}
+if ((player-is-running-left && player-uses-jump-key && holds-grab-key && player-faces-left-grab-ledge) && !jumping) then {player-will-run-jump-and-grab-ledge;}
+if ((player-is-running-right && player-uses-jump-key && holds-grab-key && player-faces-right-grab-ledge) && !jumping) then {player-will-run-jump-and-grab-ledge;}
+if (player-is-holding-grab-key-on-ledge && player-uses-up-key) then {player-will-climb-up-ledge;}
+
+Weapons/Interaction:
+
+if ((player-draws-weapon && player-uses-fire-key) && !firing then) {player-shoots;}
+if ((player-has-weapon-drawn && player-uses-fire-key) && !running && !firing && !walking) then {player-shoots;}
+if ((player -is-next-to-object && player-uses-e-key) && !picking-up-object) then {player-picks-up-object;}
+if ((player-uses-i-key) && inventory-is-open) then {inventory-will-close;}
+if ((player-uses-i-key) && !inventory-is-open) then {inventory-will-open;}
+if (((player-uses-i-key) && selects-object && player-uses-e-key) && !using-e-key) then {player-uses-item;}
+if ((player-is-next-to-switch && player-uses-e-key) && !using-switch) then {player-will-use-switch}
+
+
+Tim Russell 

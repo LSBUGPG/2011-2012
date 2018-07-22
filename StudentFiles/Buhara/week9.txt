@@ -1,0 +1,17 @@
+
+Expected reults: 
+
+-object 'item1' must be destroyed upon hiting it 
+
+-object 'item2' must be destroyed upon hitig it
+
+-object 'item3' must be destroyed upon hiting it
+
+
+Actual result:
+
+-item 1 was destroyed
+
+-item 2 was destroyed
+
+-item 3 was destroyed

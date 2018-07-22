@@ -1,0 +1,15 @@
+if (ball-off-top || ball-off-bottom) then {bounce-ball-vertically;}
+if (ball-off-left) then {player-2-scores;reset-ball;}
+if (ball-off-right) then {player-1-scores;reset-ball;}
+if (ball-hits-player1 || ball-hits-player2) then {bounce-ball-horizontally;}
+if (player-1-scores && player-1-has-10) then {player-1-wins;}
+if (player-2-scores && player-2-has-10) then {player-2-wins;}
+if (player-1-controller-up && !player-1-paddle-off-top) then {move-player-1-paddle-up;}
+if (player-1-controller-down && !player-1-paddle-off-bottom) then {move-player-1-paddle-down;}
+if (player-2-controller-up && !player-2-paddle-off-top) then {move-player-2-paddle-up;}
+if (player-2-controller-down && !player-2-paddle-off-bottom) then {move-player-2-paddle-down;}
+if (game-start) then {reset-ball;reset-player-1-score;reset-player-1-paddle;reset-player-2-score;reset-player-2-paddle;}
+
+if (crt-position-at-ball || crt-position-at-player-1-paddle || crt-position-at-player-2-paddle) then {activate-crt;}
+if (!(crt-position-at-ball || crt-position-at-player-1-paddle || crt-position-at-player-2-paddle)) then {de-activate-crt;}
+if (crt-reset) then {update-ball-position;}

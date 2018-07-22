@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<title>Week 2 notes</title>
+	<link rel="stylesheet" title="plain" type="text/css" href="plain.css" />
+	<link rel="alternate stylesheet" title="colour" type="text/css" href="colour.css"/>
+</head>
+<body>
+
+	<h2>Week 2 notes</h2>
+	<p><ol>
+		<li>Boolean logic<ul>
+			<li>named after George Boole (19th-century mathematician and philosopher)</li>
+			<li>concerned with truth and application of logical rules</li>
+			<li>usually we think of truth values as:<ul>
+			    <li>true or false</li>
+			    <li>1 or 0</li>
+			    <li>yes or no</li>
+			    <li>on or off</li>
+			    <li>high voltage or low voltage</li></ul></li>
+			<li>use of logic in game rules</li>
+			<li>provides a core of useful operations</li>
+			<li>atoms of computing</li></ul></li>
+		<li>Logical operations<ul>
+			<li>there are only 3 basic operations to remember:<ol>
+			    <li>logical NOT or logic inverter<ul>
+				<li>drawn: <img src="NOT.png" /></li>
+				<li>written: !A</li>
+				<li>if A is true out is false</li>
+				<li>if A is false out is true</li></ul></li>
+			    <li>logical OR<ul>
+				<li>drawn: <img src="OR.png" /></li>
+				<li>written: A || B</li>
+				<li>out is true if A or B or both are true</li>
+				<li>out is false if A and B are both false</li></ul></li>
+			    <li>logical AND<ul>
+				<li>drawn: <img src="AND.png" /></li>
+				<li>written: A && B</li>
+				<li>out is true if A and B are both true</li>
+				<li>out is false if A or B or both are false</li></ol></li></ul></li>
+		<li>Building<ul>
+			<li>each of these can be built with transistors</li>
+			<li>(or any self switching system eg. relays)</li>
+			<li>we don't need special operations for 3 inputs<ul>
+			    <li>chaining operations: <img src="OR3.png" /></li>
+			    <li>we can chain as many as we need</li>
+			    <li>but, note that order may be important:<ul>
+				<li>A && B || C is ambiguous</li>
+				<li>A && (B || C) <img src="ORAND3.png" /></li>
+				<li>(A && B) || C <img src="ANDOR3.png" /></li></ul></li></ul></li>
+			<li>there are <a href="boolean_functions.html">16 possible operations on two inputs</a></li>
+			<li>we can handle extra input with chains</li>
+			<li>multiplex <a href="MUX2.png">MUX</a></li>
+			<li>de-multiplex <a href="DMUX2.png">DMUX</a></li>
+			<li>note the <a href="boolean_functions.html">selection outputs</a> from the table</li>
+			<li>multiplex <a href="MUX4.png">4 channels</a></li>
+			<li>de-multiplex <a href="DMUX4.png">4 channels</a></li></ul></li>
+		<li>Exercise<ul>
+		    <li>take a game as a reference</li>
+		    <li>try to find as many Boolean operations as you can</li>
+		    <li>write these operations in if () then {} form</li>
+		    <li>use &&, ||, and ! to join your operations</li>
+		    <li>example <a href="pong.txt">Pong</a></li>
+		    <li>remember to log your time</li>
+		    <li>check in your files before 4pm next Tuesday</li></ul></li></p>
+</body>
+</html>

@@ -1,0 +1,18 @@
+Breakout 
+pseudo-code boolean analysis
+
+if (ball-off-left || ball-off-right)  	then {ball-bounces-horizontally}
+if (ball-hits-player|| ball-hits-brick) then {ball-bounces-vertically}
+if (ball-hits-brick) 			then {destroys-brick}
+if (ball-off-bottom)			then {remove-ball ; remove-player-life}
+if (all-bricks-destroyed)		then {next-level ; tally-score-total}
+if (all-lives-gone)			then {game-over}
+if (yellow-brick-destroyed)		then {add-one-point}
+if (green-brick-destroyed)		then {add-three-points}
+if (orange-brick-destoryed)		then {add-five-points}
+if (red-brick-destroyed)		then {add-seven-points}
+if (ball-collision-with-red-brick || ball-hits-top-wall)	then {paddle-shrinks-by-half}
+if (after-four-hits)			then {increase-ball-speed}
+if (after-twelve-hits)			then {increase-ball-speed}
+if (ball-hits-orange-brick) 		then {increase-ball-speed}
+if (ball-hits--red-brick) 		then {increase-ball-speed}

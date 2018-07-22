@@ -1,0 +1,27 @@
+What should happen -
+1. When player stands on purple button, purple light switches on for a few seconds then off.
+2. When player stands on orange button, orange light switches on until player steps off button.
+3. When player stands on red button, red button disappears and green button appears.
+4. When player stands on green button, green button disappears, 
+   yellow button appears and purple and orange buttons' positions change.
+5. When player stands on yellow button, player is moved to the other floor.
+6. When player stands on blue button, yellow light switches on, floor colour changes to green and text is displayed.
+
+
+What did happen -
+1. Purple light switches on for a few seconds then off.
+2. Orange light switches on until player steps off button.
+3. Red button disappears and green button appears.
+4. Green button disappears, yellow button appears, purple and orange buttons' positions change.
+5. Player is moved to the other floor. 
+6. Yellow light switches on, floor colour changes to green and text is displayed.
+
+Improvements -
+1. If stand on purple button waiting, the light won't switch on again.
+2. If purple light is still on at the time, the light colours mix rather than the orange light overriding the purple light.
+3. Green button could appear momentarily after the red.
+4. The purple and orange buttons move very fast, could be slower to show the movement. 
+5. Could happen slightly slower. 
+6. Light could turn on more gradually. Text could be larger and exact centre screen.  
+
+

@@ -1,0 +1,19 @@
+/* change background colour and font */
+body
+{
+	font:16pt consolas, sans-serif;
+	background-color: AntiqueWhite;
+}
+
+/* put citations in italic */
+.citation
+{
+	font-style: italic;
+}
+
+/* don't underline links */
+a
+{
+	text-decoration: none;
+}
+

@@ -1,0 +1,43 @@
+Step 1:
+
+Created a cube where when a ball passes through it, it will trigger a function to play a sound
+on collision but it will also cause cube2 on the scene to destroy.
+
+What Happened
+
+Ever happen according to play, instead of stating in the script how long to wait I've could have
+included a yield function.
+
+
+
+Step 2:
+
+Create a cube on the scene that when the ball passes through, it will trigger a function to look for a 
+music source within the main camera and play it, I've also addeds a debug to check if it is working
+properly.
+
+What Happened
+
+Everything happen according to plan, but I've could have also added this function within one off the
+others one and create a call function that whent he cube passes through cube 3 the function can be 
+enabled.
+
+
+
+Step 3:
+
+This time instead I wanted to create a more challenging script where I want one object to send
+message to another object and make it do a particulary function. Therefore I create a script called 
+"Caller" where I placed a OncollisionEnter function then that when ever this object (Ball) collides 
+with another object (Cube1) then I want it to find the object "Cube5" and execute the custom function
+"Call" within that script.
+
+Therefore I created another Script within "Cube5" and called it Reciever where basicaly first I
+assasigned a texture when this function get called but also I've created a custom function called
+"function Call" where basically I stated that when ever this function gets called then the texture must
+changed but I also want to add a rigidbody cuasing the ball to fall mid air. However since I didn't
+want this to happen suddenly I added a yield to make it wait for 3 seconds.
+
+What Happened
+
+Every happen according to plan, and I'm extremely satisfied with the results.

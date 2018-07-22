@@ -1,0 +1,19 @@
+Game: Pac Man
+
+Controls:
+if(PlayerControllerUp && !WallUp) then {Move PacmanUp;}
+
+set MSB=T a=F c=TTFFFF d=FTF
+set MSB=T a=T c=FFFTTT d=FFF
+
+if(PlayerControllerDown && !WallDown) then {Move PacmanDown;}
+
+set MSB=T a=T c=FFFTTT d=FFF
+
+if(PlayerControllerLeft && !WallLeft) then {Move PacmanLeft;}
+
+set MSB=T a=F c=TTFFFF d=FTF
+
+if(PlayerControllerRight && !WallRight) then {Move PacmanRight;}
+
+set MSB=T a=T c=FFTTFF d=FFF

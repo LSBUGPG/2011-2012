@@ -1,0 +1,39 @@
+if ((pacman_x_pos = ghost_x_pos) && (pacman_y_pos = ghost_y_pos) 
+then {life -1};
+
+pacman_x_pos = ghost_x_pos
+
+pacman_x_pos - ghost_x_pos = 0
+
+pacman_x_pos = 0x0001
+ghost_x_pos = 0x0002
+
+
+1. load value 0x0001 in the address register
+2. set MSB=T, a=F, c1=T, c2=T, c3=F, c4=F, c5=F, c6=F, d1=F, d2=T, d3=F
+3. load value 0x0002 in the address register
+4. set MSB=T, a=T, c1=F, c2=T, c3=F, c4=F, c5=T, c6=T, d1=F, d2=F, d3=F
+5. if zero output is T then pacman_x_pos - ghost_x_pos = 0
+
+pacman_y_pos = ghost_y_pos
+
+pacman_y_pos - ghost_y_pos = 0
+
+pacman_y_pos = 0x0003
+ghost_y_pos = 0x0004
+
+
+1. load value 0x0003 in the address register
+2. set MSB=T, a=F, c1=T, c2=T, c3=F, c4=F, c5=F, c6=F, d1=F, d2=T, d3=F
+3. load value 0x0004 in the address register
+4. set MSB=T, a=T, c1=F, c2=T, c3=F, c4=F, c5=T, c6=T, d1=F, d2=F, d3=F
+5. if zero output is T then pacman_y_pos - ghost_y_pos = 0
+
+
+life = 0x0005
+
+ 
+life - 1 
+
+1. load value 0x0005 in the address register
+2. set MSB=T, a=F, c1=T, c2=T, c3=F, c4=F, c5=T, c6=F, d1=F, d2=F, d3=F

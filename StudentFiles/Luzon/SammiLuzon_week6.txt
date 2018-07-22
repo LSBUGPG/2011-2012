@@ -1,0 +1,26 @@
+RAM:
+
+0x0001: mario_pos
+0x0002: enemy_pos
+0x0003: life
+
+ROM:
+		mario_pos - enemy_pos
+
+0x0000: 0x0001 	Write the address of mario_pos to the address register
+0x0001: 0xEC10 	write the address of mario_pos to the data register
+0x0002: 0x0002 	write the address of enemy_pos to the address register
+0x0003: 0xF4D0 	write the address mario_pos-enemy_pos to the data register
+0x0004:	0x0008	write ROM address of "end of loop" code to the address register
+0x0005: 0xE305	If data != 0 then jump to address "end of loop"	
+
+		life -1
+
+0x0006: 0x0003 	write the address of life to the address register
+0x0007: 0xFC88	write the address of life -1 to RAM	
+
+		end of loop
+
+0x0008: 0x0000 	write ROM address of "mario_pos - enemy_pos" code to the address register
+0x0009:	0xEFC7 	jump to "mario_pos - enemy_pos"
+

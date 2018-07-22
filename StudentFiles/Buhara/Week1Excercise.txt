@@ -1,0 +1,25 @@
+
+
+*Player controls: left, right, up, down
+*player scoring: pellets
+*player collects 240 pellets in each stage then progress to next level
+*bonus scoring: power pellets, cherry, blue ghost
+*enemies: red and pink ghost(pursue player) green and orange(move randomly)
+
+
+if (player-control-right || player-control-left) then {player-moves-horizontally;}
+if (player-control-up || player-control-down) then {palyer-moves-vertically;}
+if (player-control-left && !control-left) then {player-moves-left;)
+if (player-control-right && !control-right) then {player-moves-right;)
+if (player-control-up && !control-up) then {player-moves-up;)
+if (player-control-down && !control-down) then {player-moves-down;)
+if (player-control-right || player-control-left) then {player-moves-horizontally;red-ghost-pursue-player;pink-ghost-pursue-player;}
+if (player-hits-pellet) then {player-scores-10;remove-pellet;}
+if (player-hits-cherry) then {player-scores-100;remove-cherry;}
+if (player-hits-power-pellet) then {player-scores-50;ghost-turn-blue;remove-power-pellet;}
+if (player-hits-blue-ghost) then {player-scores-200;remove-blue-ghost;}
+if (player-hits-all-pellets) then {player-scores-2400;progress-next-stage;}
+if (player-hits-ghost) then {player-dies;remove-life;reset-player;}
+if (player-hits-ghost && player-no-lives-remain) then {end-game;}
+if (player-hits-wall && !wall-hit) then {player-is-blocked;}
+

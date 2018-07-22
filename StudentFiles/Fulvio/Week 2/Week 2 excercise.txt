@@ -1,0 +1,35 @@
+if (ball-off-left || ball-off-right) then {bounce-ball-horizontal;}
+if (ball-off-top) then {bounce-ball-vertically;}
+if (ball-hit-platform) then {bounce-ball;}
+if (ball-hit-brick-yellow) then {player-scores-1-point;}
+if (ball-hit-brick-yellow) then {bounce-ball-vertically;}
+if (ball-hit-brick-yellow) then {brick-disappear;}
+if (ball-hit-brick-green) then {player-scores-3-points;}
+if (ball-hit-brick-green) then {bounce-ball-vertically;}
+if (ball-hit-brick-green) then {brick-disappear;}
+if (ball-hit-brick-orange) then {player-scores-5-points;}
+if (ball-hit-brick-orange) then {ball-speed-increase}
+if (ball-hit-brick-orange) then {bounce-ball-vertically;}
+if (ball-hit-brick-orange) then {brick-disappear;}
+if (ball-hit-brick-red) then {player-scores-7-points;}
+if (ball-hit-brick-red) then {ball-speed-increase}
+if (ball-hit-brick-red) then {bounce-ball-vertically;}
+if (ball-hit-brick-red) then {brick-disappear;}
+if (ball-hit-4-brick) then {ball-speed-increase;}
+if (ball-hit-12-brick) then {ball-speed-increase;}
+if (ball-off-top) then {platform-shrink-half;}
+if (ball-off-bottom) then {player-1-losse-turn;reset-ball;}
+if (ball-off-bottom) then {player-2-losse-turn:reset-ball:}
+
+if (player-1-scores && player-1-has-higher) then {player-1-wins;}
+if (player-2-scores && player-2-has-higher) then {player-2-wins;}
+if (player-controller-left && !player-paddle-off-left) then {move-player-paddle-left;}
+if (player-controller-right && !player-paddle-off-right) then {move-player-paddle-right;}
+<<<<<<< .mine
+if (game-start-singleplayer) then {reset-ball;reset-player-1-score;reset-player-1-paddle;}
+if (game-start-multiplayer) then {reset-ball;reset-player-1-score;reset-player-1-paddle;reset-player-2-score;reset-player-2-paddle;}
+
+=======
+if (game-start-singleplayer) then {reset-ball;reset-player-1-score;reset-player-1-paddle;}
+if (game-start-multiplayer) then {reset-ball;reset-player-1-score;reset-player-1-paddle;reset-player-2-score;reset-player-2-paddle;}
+>>>>>>> .r106

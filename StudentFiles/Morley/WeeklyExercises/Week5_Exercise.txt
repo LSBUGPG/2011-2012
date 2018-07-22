@@ -1,0 +1,21 @@
+Data stored in RAM:
+0x0001 ball-y-position
+0x0002 ball-y-velocity
+0x0003 paddle-position
+
+has the ball hit the paddle? (ball-y-position - paddle-position) = 0)
+set MSB=F number=0x0001
+set MSB=T a=F c=TTFFFF d=FTF
+set MSB=F number=0x0003
+set MSB=T a=T c=FFFTTT d=FFF
+result is true if negative=F
+
+bounce the ball vertically: (ball-y-velocity = -(ball-y-velocity)
+set MSB=F number=0x0002
+set MSB=T a=T c=TTFFTT d=FFT
+
+update the ball's height: (ball-y-position = ball-y-position + ball-y-velocity)
+set MSB=F number=0x0002
+set MSB=T a=T c=TTFFFF d=FTF
+set MSB=F number=0x0001
+set MSB=T a=T c=FFFFTF d=FFT

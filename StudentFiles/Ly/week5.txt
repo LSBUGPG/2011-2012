@@ -1,0 +1,20 @@
+coin score = 0000
+lives score = 0001
+
+A= 100
+B= Coin score
+
+Coin score -100 is >=0
+1. load the value 0x0064 into the address register
+2. set MSB=T, a=F, c1=T, c2=T, c3=F, c4=F, c5=F, c6=F, d1=F, d2=T, d3=F
+3. load 0x0000 into the address register
+4. Set MSB=T a=T, c1=F, c2=F, c3=F, c4=T, c5=T, c6=T, d1=F, d2=F, d3=F
+5. If Neg flag is F then coin score-100>=0
+
+add one to lives score
+1. load the value 0x0001 into the address register
+2. Set MSB=T, a=T, c1=T, c2=T, c3=F, c4=T, c5=T, c6=T, d1=F, d2=F, d3=T
+
+set coin score to 0
+1. load the value 0x0000 into the address register
+2. Set MSB=T a=T, c1=T, c2=F, c3=T, c4=F, c5=T, c6=F, d1=F, d2=F, d3=T

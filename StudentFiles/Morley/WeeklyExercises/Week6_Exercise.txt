@@ -1,0 +1,17 @@
+RAM   :
+0x0000: ball-y-position
+0x0001: ball-y-velocity
+0x0002: paddle-position
+
+ROM   : code
+0x0000: 0x0000     input ball-y-position
+0X0001: 0x0001     input ball-y-velocity
+0x0002: 0xEC10     update ball-y-position
+0x0003: 0x0010     write ROM address of "invert ball-y-velocity" code to address register
+0x0004: 0xF1C2     ball-y-positon - paddle-position, jump to invert ball-y-velocity if 0
+
+                   update ball's height
+0x0005: 0x0001     input ball-y-velocity
+0x0006: 0xFC10     
+0X0007: 0X0000     input ball-y-position
+0X0008: 0XF088     ball-y-position = ball-y-position + ball-y-velocity

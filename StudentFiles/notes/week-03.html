@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+  <head>
+    <title>Week 3 notes</title>
+    <style type="text/css">
+      table
+      {
+      border-collapse:collapse;
+      }
+      table, tr, th, td
+      {
+      border:1px solid black;
+      padding-left:8px;
+      padding-right:8px;
+      }
+    </style>
+    <link rel="stylesheet" title="plain" type="text/css" href="plain.css" />
+  </head>
+  <body>
+    <h2>Week 3 notes</h2>
+    <p><ol>
+	<li>Review of decimal number system<ul>
+	    <li>decimal digits: 0123456789</li>
+	    <li>decimal positions:
+	      <br /> <img src="decimal.png" /></li>
+	    <li>decimal addition:
+	      <br /><img src="decimal_add.png" /></li>
+	    <li>note: in any column you can only carry 1</li>
+	    <li>advantages: familiar, compact</li>
+	    <li>disadvantages: hard to represent with logic</li></ul></li>
+	<li>Binary number system<ul>
+	    <li>binary digits: 01</li>
+	    <li>binary positions:<br /> <img src="binary.png" /></li>
+	    <li>binary addition:
+	      <br /><img src="binary_add.png" /></li>
+	    <li>full table of 2 digit addition:
+	      <table>
+		<tr><th rowspan="2">inputs</th><th>A</th><td>F</td><td>F</td><td>T</td><td>T</td></tr>
+		<tr><th>B</th><td>F</td><td>T</td><td>F</td><td>T</td></tr>
+		<tr><th colspan="2">out</th><td>F</td><td>T</td><td>T</td><td>F</td></tr>
+		<tr><th colspan="2">carry</th><td>F</td><td>F</td><td>F</td><td>T</td></tr>
+	    </table></li>
+	    <li>we can produce both these outputs with <a href="boolean_functions.html">boolean functions</a></li>
+	    <li>advantages: trivial to represent with logic</li>
+	    <li>disadvantages: large, unfamiliar</li></ul></li>
+	<li>Hexadecimal number system<ul>
+	    <li>hexadecimal digits: 0123456789ABCDEF</li>
+	    <li>hexadecimal positions:<br /> <img src="hexdecimal.png" /></li>
+	    <li>advantages: easy to represent, compact</li>
+	    <li>disadvantages: unfamiliar</li>
+	    <li>convert hexadecimal digits to binary:
+	      <table>
+		<tr><th>hexadecimal</th><th>binary</th></tr>
+		<tr><td>0</td><td>0000</td></tr>
+		<tr><td>1</td><td>0001</td></tr>
+		<tr><td>2</td><td>0010</td></tr>
+		<tr><td>3</td><td>0011</td></tr>
+		<tr><td>4</td><td>0100</td></tr>
+		<tr><td>5</td><td>0101</td></tr>
+		<tr><td>6</td><td>0110</td></tr>
+		<tr><td>7</td><td>0111</td></tr>
+		<tr><td>8</td><td>1000</td></tr>
+		<tr><td>9</td><td>1001</td></tr>
+		<tr><td>A</td><td>1010</td></tr>
+		<tr><td>B</td><td>1011</td></tr>
+		<tr><td>C</td><td>1100</td></tr>
+		<tr><td>D</td><td>1101</td></tr>
+		<tr><td>E</td><td>1110</td></tr>
+		<tr><td>F</td><td>1111</td></tr>
+	</table></li></ul></li>
+	<li>scaling up gates for binary numbers<ul>
+	    <li>why are numbers useful?</li>
+	    <li>8 bit AND gate:
+	      <br /><img src="AND8.png"/ ></li>
+	    <li>similar process for 16 and 32 bit:
+	      <br /><img src="AND16.png" />
+	      <br />
+	      <br /><img src="AND32.png"></li>
+	</ul></li>
+	<li>binary addition with logic<ul>
+	    <li>add 2 bits (half adder):
+	      <br /><img src="half_adder.png" /></li>
+	    <li>add 2 bits and a carry (full adder):
+	      <br /><img src="full_adder.png" /></li>
+	    <li>new notation:
+	      <br /><img src="half_adder_new.png" />
+	      <br />
+	      <br /><img src="full_adder_new.png" />
+	      <br />
+	      <br /><img src="full_adder_new2.png" /></li>
+	    <li>ripple carry adder:
+	      <br /><img src="ripple_carry_adder.png" /></li>
+	    <li>note: overflow sends a carry out</li>
+	    <li>we can use this feature for negative numbers and subtraction
+	      <table>
+		<tr><th>decimal</th><th>binary</th></tr>
+		<tr><td>0</td><td>0000</td></tr>
+		<tr><td>1</td><td>0001</td></tr>
+		<tr><td>2</td><td>0010</td></tr>
+		<tr><td>3</td><td>0011</td></tr>
+		<tr><td>4</td><td>0100</td></tr>
+		<tr><td>5</td><td>0101</td></tr>
+		<tr><td>6</td><td>0110</td></tr>
+		<tr><td>7</td><td>0111</td></tr>
+		<tr><td>-8</td><td>1000</td></tr>
+		<tr><td>-7</td><td>1001</td></tr>
+		<tr><td>-6</td><td>1010</td></tr>
+		<tr><td>-5</td><td>1011</td></tr>
+		<tr><td>-4</td><td>1100</td></tr>
+		<tr><td>-3</td><td>1101</td></tr>
+		<tr><td>-2</td><td>1110</td></tr>
+		<tr><td>-1</td><td>1111</td></tr>
+	</table></li>
+	    <li>note: anything particular about the negative numbers?</li>
+	    <li>test for &lt; 0</li>
+	    <li>is A &lt; B ?</li>
+	    <li>is (A - B) &lt; 0 ?</li>
+	</ul></li>
+	<li>encoding pictures<ul>
+	    <li>bitmap format file</li>
+	    <li>View.exe program</li>
+	    <li>encoding text as <a href="ASCII.png">ASCII</a></li>
+	    <li>encoding audio as <a href="sample.png">samples</a></li>
+	</ul></li>
+	<li>summary<ul>
+	    <li>we can represent positive and negative numbers</li>
+	    <li>we can encode text, graphics, and sound</li>
+	    <li>we apply rules that require sums and comparisons</li>
+	</ul></li>
+	<li>Exercise<ul>
+	    <li>take any game as a reference or design your own</li>
+	    <li>create a set (3 or more) of recognizable game tokens</li>
+	    <li>use graph paper or a program of your choice</li>
+	    <li>(I suggest 8x8 pixels)</li>
+	    <li>write out .bitmap files in Notepad or editor of your choice</li>
+	    <li>test using View.exe</li>
+	    <li>time your first translation to hex</li>
+	    <li>use this to estimate how long it will take you</li>
+	    <li>check in .bitmap, log, and estimate</li>
+	    <li>4pm next Tuesday</li></ul></li></ol></p>
+  </body>
+</html>

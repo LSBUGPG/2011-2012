@@ -1,0 +1,338 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+  <head>
+    <title>Week 9 notes</title>
+    <style type="text/css">
+      table
+      {
+      border-collapse: collapse;
+      }
+      table, tr, th, td
+      {
+      border: 1px solid black;
+      padding-left: 8px;
+      padding-right: 8px;
+      }
+      th, td
+      {
+      min-width: 2em;
+      }
+      pre
+      {
+      border-style: solid
+      }
+      .comment
+      {
+      color: green;
+      }
+    </style>
+    <link rel="stylesheet" title="plain" type="text/css" href="plain.css" />
+  </head>
+  <body>
+    <h2>Week 9 notes</h2>
+    <ol>
+      <li><h3>Recap</h3><ul>
+	  <li><a href="week-02.html">week 2</a>: Boolean logic</li>
+	  <li><a href="week-03.html">week 3</a>: numbers and other data types</li>
+	  <li><a href="week-04.html">week 4</a>: memory, registers, and loops</li>
+	  <li><a href="week-05.html">week 5</a>: programmable circuits</li>
+	  <li><a href="week-06.html">week 6</a>: machine code</li>
+	  <li><a href="week-07.html">week 7</a>: assembler</li>
+	  <li><a href="week-08.html">week 8</a>: 3rd generation languages</li>
+      </ul></li>
+      <li><h3>Modules, libraries, and linking</h3><ul>
+	  <li><h4>scaling up</h4><ul>
+	      <li>how to manage larger programs?</li>
+	      <li>multiple methods in C and C++:<ul>
+		  <li>separate source modules</li>
+		  <li>linking through headers</li>
+		  <li>collated into libraries</li>
+		  <li>terminology: modules and libraries often synonymous</li>
+		  <li>linking with libraries</li>
+		  <li>library code in headers</li>
+	      </ul></li>
+	      <li>the Unity / Javascript approach</li>
+	  </ul></li>
+	  <li><h4>standard system libraries</h4><ul>
+	      <li>console input and output</li>
+	      <li>file handling</li>
+	      <li>direct access to hardware e.g. keyboard map</li>
+	      <li>string handling (internationalization)</li>
+	      <li>math</li>
+	      <li>debugging</li>
+	      <li>memory management</li>
+	      <li>C++ containers</li>
+	      <li>C++ algorithms</li>
+	      <li>Unity / Javascript documents its libraries</li>
+	  </ul></li>
+	  <li><h4>preprocessing and macros</h4><ul>
+	      <li>briefly recap preprocessor from last week:<ul>
+		  <li>C and C++ code goes through preprocessor first</li>
+		  <li>allows text replacement before compilation</li>
+	      </ul></li>
+	      <li>useful in module code for:<ul>
+		  <li>optional build specific code e.g. demo build</li>
+		  <li>abbreviating duplicated code blocks</li>
+		  <li>abstracting away platform variations</li>
+		  <li>maintaining consistent naming</li>
+	      </ul></li>
+	  </ul></li>
+	  <li><h4>templates and generic programming</h4><ul>
+	      <li>C++ alternative to many preprocessor tricks</li>
+	      <li>advantages over preprocessor:<ul>
+		  <li>more optimal code generation</li>
+		  <li>maintains type safety</li>
+	      </ul></li>
+	      <li>disadvantages:<ul>
+		  <li>source code bloat</li>
+		  <li>object code bloat</li>
+		  <li>longer compile times</li>
+		  <li>harder to interpret</li>
+		  <li>complicated error messages</li>
+		  <li>many limitations</li>
+	      </ul></li>
+	  </ul></li>
+	  <li><h4>object files, linking, and libraries</h4><ul>
+	      <li>each c or cpp file compiles to binary data file</li>
+	      <li>this is called the "object" file</li>
+	      <li>each object file contains:<ul>
+		  <li>machine code for each function</li>
+		  <li>allocated data</li>
+		  <li>a table of symbols pointing to the above</li>
+	      </ul></li>
+	      <li>a separate program combines the object files into an executable</li>
+	      <li>this program is called the linker</li>
+	      <li>symbols are matched by name</li>
+	      <li>symbol names must match exactly in the source</li>
+	      <li>in C and C++ symbol names are unified through "headers"</li>
+	      <li>the preprocessor includes header text into source files</li>
+	      <li>a symbol declared in a header is guaranteed to match</li>
+	      <li>another program can collect a group of object files into a library</li>
+	      <li>this program is called the librarian</li>
+	      <li>the linker picks just the required parts from a library</li>
+	      <li>this reduces redundant code in the executable</li>
+	  </ul></li>
+	  <li><h4>module division guidelines</h4><ul>
+	      <li>how to group functions and data in modules?</li>
+	      <li>two principles: high cohesion and loose coupling</li>
+	      <li>high cohesion means keeping related things together</li>
+	      <li>loose coupling means minimizing the connections between modules</li>
+	      <li>other guidelines:<ul>
+		  <li>keep dependencies one way</li>
+		  <li>prefer wide and flat</li>
+	      </ul></li>
+	  </ul></li>
+	  <li><h4>dynamic memory management</h4><ul>
+	      <li>a common module to manage memory allocation at runtime</li>
+	      <li>usually contains allocate and free functions</li>
+	      <li>frequently contains additional debugging features</li>
+	      <li>modern languages embed it into the syntax</li>
+	      <li>it manages one or more "heaps"</li>
+	      <li>a heap is an unstructured area of RAM</li>
+	      <li>a heap usually begins as a single free block:</li>
+	      <p><img src="heap01.png" /></p>
+	      <li>the gray box represents the block header</li>
+	      <li>the header usually contains:<ul>
+		  <li>the size of the block</li>
+		  <li>a pointer to the next block, if any</li>
+	      </ul></li>
+	      <li>the memory manager maintains pointers to:<ul>
+		  <li>the first free memory block</li>
+		  <li>the first used memory block</li>
+	      </ul></li>
+	      <li>when a block is allocated, the memory manager:<ul>
+		  <li>walks through the free blocks to find one big enough</li>
+		  <li>subdivides that block if necessary</li>
+		  <li>adjusts all of the pointers</li>
+		  <li>returns the address of the new block</li>
+	      </ul></li>
+	      <li>for example, after allocating a ship bitmap:</li>
+	      <p><img src="heap02.png" /></p>
+	      <li>we can continue to allocate in any arbitrary order:</li>
+	      <p><img src="heap03.png" /></p>
+	      <li>if a bullet hits the invader, we no longer need:<ul>
+		  <li>the bullet that hit</li>
+		  <li>the invader</li>
+	      </ul></li>
+	      <li>the memory manager adds them back to the free list:</li>
+	      <p><img src="heap04.png" /></p>
+	      <li>if we add another invader, it will fit in the gap</li>
+	      <li>when the remaining bullet and explosion disappear:<ul>
+		  <li>add their blocks to the free list</li>
+		  <li>coalesce adjacent blocks</li>
+	      </ul></li>
+	      <li>this helps to prevent fragmentation:</li>
+	      <p><img src="heap05.png" /></p>
+	      <li>in C you must allocate and free memory with functions:</li>
+	      <pre>
+		
+Ship * ship = (Ship*)malloc(sizeof(Ship));
+// ...
+free(ship);
+		</pre>
+		<li>in C++ you can:<ul>
+		    <li>use the built in language features:</li>
+		    <pre>
+
+Ship * ship = new Ship;
+// ...
+delete ship;
+		    </pre>
+		    <li>use new and a reference counting "smart" pointer</li>
+		    <pre>
+
+auto_ptr&lt;Ship&gt; ship = new Ship;
+// ...
+// ship is deleted automatically when variable goes out of scope
+		    </pre>
+		</ul></li>
+		<li>Javascript implements a garbage collector:</li>
+		<pre>
+
+var ship: Ship = new Ship;
+// ...
+// ship is deleted automatically some time after variable goes out of scope
+		</pre>
+
+	  </ul></li>
+      </ul></li>
+      <li><h3>Worked example</h3><ul>
+	  <li>taking Pong as an example:<ul>
+	      <li>"physics" i.e. object updates</li>
+	      <li>collision detection</li>
+	      <li>"renderer" i.e. sprite drawing</li>
+	      <li>text drawing</li>
+	      <li>math functions</li>
+	      <li>audio output</li>
+	      <li>input devices</li>
+	      <li>gameplay rules</li>
+	  </ul></li>
+	  <li>imagining the dependencies between the modules:</li>
+	  <p><img src="pong-modules.png" /></p>
+	  <pre>
+MODULE NAME: math
+
+PURPOSE:
+
+Provides 2D coordinate types and mathematical operations on those types.
+
+TYPES:
+
+Coord: An int "x" and "y" coordinate.
+Box: A "topLeft" Coord and a "size" Coord.
+
+FUNCTIONS:
+
+function Move(box: Box, vector: Coord): Box
+
+Returns a Box that represents the given "box" moved by the amount in "vector".
+
+
+
+function Inside(pos: Coord, box: Box): boolean
+
+Returns true if the point "pos" is inside the given "box" otherwise it 
+returns false.
+
+
+function MakeCenteredBox(centre: Coord, size: Coord): Box
+
+Returns a Box value representing a box centered on position "centre" with the 
+given "size" dimensions.
+
+
+
+function Centre(box: Box): Coord
+
+Returns a Coord value representing the centre of the given "box".
+
+
+
+function ReflectHorizontal(vector: Coord): Coord
+
+Returns a Coord matching "vector" but reflected in X.
+
+
+
+function ReflectVertical(vector: Coord): Coord
+
+Returns a Coord matching "vector" but reflected in Y.
+
+
+
+function Clamp(value: int, min: int, max: int): int
+
+Returns "value" if between "min" and "max". Otherwise if the "value" is above 
+"max" it returns "max". Otherwise it returns "min".
+
+
+
+function ClampBox(box: Box, bounds: Box): Box
+
+Returns the given "box" if it is with the given "bounds". Otherwise it returns
+a Box adjusted to be within the given "bounds". If the size of the given "box"
+is greater than the size of the given "bounds" in either width or height,
+then the return value is undefined.
+	  </pre>
+	  <li><h4>schedule</h4><ul>
+	      <li>log: tells you how long something took</li>
+	      <li>estimate: predicts how long something will take</li>
+	      <li>schedule: lays out when each task can start</li>
+	      <li>example schedule with 1 resource:</li>
+	      <p><table>
+		<tr><th colspan="4">task</th><th colspan="4">estimated</th><th colspan="4">actual</th></tr>
+		<tr><th>name</th><th>id</th><th>depends</th><th>resource</th><th>start date</th><th>start time</th><th>end date</th><th>end time</th><th>start date</th><th>start time</th><th>end date</th><th>end time</th></tr>
+		<tr><td>design math module</td><td>1</td><td></td><td>paul</td><td>30/03/12</td><td>9:00</td><td>30/03/12</td><td>13:00</td><td></td><td></td><td></td><td></td></tr>
+		<tr><td>design audio module</td><td>2</td><td></td><td>paul</td><td>30/03/12</td><td>14:00</td><td>30/03/12</td><td>18:00</td><td></td><td></td><td></td><td></td></tr>
+		<tr><td>design input module</td><td>3</td><td></td><td>paul</td><td>02/04/12</td><td>9:00</td><td>02/04/12</td><td>13:00</td><td></td><td></td><td></td><td></td></tr>
+		<tr><td>design renderer module</td><td>4</td><td>1</td><td>paul</td><td>02/04/12</td><td>14:00</td><td>02/04/12</td><td>18:00</td><td></td><td></td><td></td><td></td></tr>
+		<tr><td>design physics module</td><td>5</td><td>1</td><td>paul</td><td>03/04/12</td><td>9:00</td><td>03/04/12</td><td>13:00</td><td></td><td></td><td></td><td></td></tr>
+		<tr><td>design collision module</td><td>6</td><td>1</td><td>paul</td><td>03/04/12</td><td>14:00</td><td>03/04/12</td><td>18:00</td><td></td><td></td><td></td><td></td></tr>
+		<tr><td>design text module</td><td>7</td><td>4</td><td>paul</td><td>04/04/12</td><td>9:00</td><td>04/04/12</td><td>13:00</td><td></td><td></td><td></td><td></td></tr>
+		<tr><td>design debug module</td><td>8</td><td>7</td><td>paul</td><td>04/04/12</td><td>14:00</td><td>04/04/12</td><td>18:00</td><td></td><td></td><td></td><td></td></tr>
+	      </table></p>
+	      <li>example schedule with more resources:</li>
+	      <p><table>
+		<tr><th colspan="4">task</th><th colspan="4">estimated</th><th colspan="4">actual</th></tr>
+		<tr><th>name</th><th>id</th><th>depends</th><th>resource</th><th>start date</th><th>start time</th><th>end date</th><th>end time</th><th>start date</th><th>start time</th><th>end date</th><th>end time</th></tr>
+		<tr><td>design math module</td><td>1</td><td></td><td>paul</td><td>30/03/12</td><td>9:00</td><td>30/03/12</td><td>13:00</td><td></td><td></td><td></td><td></td></tr>
+		<tr><td>design audio module</td><td>2</td><td></td><td>arkin</td><td>30/03/12</td><td>9:00</td><td>30/03/12</td><td>13:00</td><td></td><td></td><td></td><td></td></tr>
+		<tr><td>design input module</td><td>3</td><td></td><td>liam</td><td>30/03/12</td><td>9:00</td><td>30/03/12</td><td>13:00</td><td></td><td></td><td></td><td></td></tr>
+		<tr><td>design renderer module</td><td>4</td><td>1</td><td>paul</td><td>30/03/12</td><td>14:00</td><td>30/03/12</td><td>18:00</td><td></td><td></td><td></td><td></td></tr>
+		<tr><td>design physics module</td><td>5</td><td>1</td><td>arkin</td><td>30/03/12</td><td>14:00</td><td>30/03/12</td><td>18:00</td><td></td><td></td><td></td><td></td></tr>
+		<tr><td>design collision module</td><td>6</td><td>1</td><td>liam</td><td>30/03/12</td><td>14:00</td><td>30/03/12</td><td>18:00</td><td></td><td></td><td></td><td></td></tr>
+		<tr><td>design text module</td><td>7</td><td>4</td><td>paul</td><td>02/04/12</td><td>9:00</td><td>02/04/12</td><td>13:00</td><td></td><td></td><td></td><td></td></tr>
+		<tr><td>design debug module</td><td>8</td><td>7</td><td>paul</td><td>02/04/12</td><td>14:00</td><td>02/04/12</td><td>18:00</td><td></td><td></td><td></td><td></td></tr>
+	      </table></p>
+	  </ul></li>
+      </ul></li>
+      <li><h3>Exercise</h3><ul>
+	  <li>Use any existing game design</li>
+	  <li>Make a list of things you need to implement</li>
+	  <li>Look for common features within this list</li>
+	  <li>Construct a module design:<ul>
+	      <li>one box per module</li>
+	      <li>arrows show dependencies</li>
+	  </ul></li>
+	  <li>Take one module:<ul>
+	      <li>create an appropriate name</li>
+	      <li>describe the general purpose of the module</li>
+	      <li>for each function:<ul>
+		  <li>create an appropriate name</li>
+		  <li>name the inputs and outputs</li>
+		  <li>document the type and purpose of each input and output</li>
+		  <li>document the purpose of the function</li>
+	      </ul></li>
+	  </ul></li>
+	  <li>track the time it takes you to design your first module</li>
+	  <li>make an estimate for each remaining module</li>
+	  <li>total the estimate to complete the work alone</li>
+	  <li>assume enough programmers to work on all modules concurrently</li>
+	  <li>create a schedule with start and end dates</li>
+	  <li>ensure that dependent modules don't start until their dependency is complete</li>
+	  <li>check in your schedule, estimates, work log, and module design</li>
+	  <li>4pm next Tuesday</li>
+      </ul></li>
+    </ol>
+  </body>
+</html>

@@ -1,0 +1,22 @@
+MODULE NAME: Audio
+
+PURPOSE:
+
+Provides sound types and plays them.
+
+TYPES:
+
+Sound: a sound file stored in memory.
+Play: opens and plays a sound file.
+
+FUNCTIONS:
+
+function playOnce (sound: Sound, play: Play) : Sound
+
+Calls a sound from memory and plays it once.
+
+function playLooped (pos: Sound, play: Play): boolean
+
+Calls a sound from memory and plays it continually so long as the operation remains true.
+
+ 

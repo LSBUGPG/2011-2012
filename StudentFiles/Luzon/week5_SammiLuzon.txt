@@ -1,0 +1,25 @@
+if (mario_x_pos = enemy_x_pos) then {life -1};
+
+mario_x_pos = enemy_x_pos
+
+     A              B
+mario_x_pos - enemy_x_pos = 0
+
+mario_x_pos = 0x0001
+enemy_x_pos = 0x0002
+
+
+1. load value 0x0001 in the address register
+2. set MSB=T, a=F, c1=T, c2=T, c3=F, c4=F, c5=F, c6=F, d1=F, d2=T, d3=F
+3. load value 0x0002 in the address register
+4. set MSB=T, a=T, c1=F, c2=T, c3=F, c4=F, c5=T, c6=T, d1=F, d2=F, d3=F
+5. if zero flag is T then mario_x_pos - enemy_x_pos = 0
+
+
+life = 0x0003
+
+ B
+life - 1 
+
+1. load value 0x0003 in the address register
+2. set MSB=T, a=F, c1=T, c2=T, c3=F, c4=F, c5=T, c6=F, d1=F, d2=F, d3=F

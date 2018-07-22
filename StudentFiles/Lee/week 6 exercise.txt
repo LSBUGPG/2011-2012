@@ -1,0 +1,55 @@
+ROM	:	code in binary				notes
+
+							Update score
+							test (ball-y-position == brick-y-position)
+0x0000	:	0000 0000 0000 0001			writes ball-y-position into address register
+0x0001	: 	1111 1100 0001 0000			writes ball-y-position from memory into data register
+0x0003	:	0000 0000 0000 0011			writes brick-y-position into address register
+0x0004 	:	1111 0001 1101 0000			writes brick-y-position - ball-y-position into data register
+0x0005  :	0000 0000 0001 0000			checks if they are the same: (ball-y-position && brick-y-position == 0)
+0x0006  :	1110 0011 0000 0101			jump to "end of loop" if data register != 0
+
+							test (ball-x-position == brick-x-position)
+0x0007	:	0000 0000 0000 0000			writes ball-x-position into address register
+0x0008	: 	1111 1100 0001 0000			writes ball-x-position from memory into data register
+0x0009	:	0000 0000 0000 0010			writes brick-x-position into address register
+0x000A 	:	1111 0001 1101 0000			writes brick-x-position - ball-x-position into data register
+0x000B  :	0000 0000 0001 0000			checks if they are the same: (ball-X-position && brick-X-position == 0)
+0x000C  :	1110 0011 0000 0101			jump to "end of loop" if data register != 0
+
+							score +1
+0x000E	:	0000 0000 0000 0100			load address score to address register
+0x000F	:	1111 1101 1100 1000			score = score+1
+
+							end of loop
+0x0010	: 	0000 0000 0000 0000			write ROM address of "update score" code to address register
+0x0011	: 	1110 1111 1100 0111			jump to "update score"
+
+
+
+ROM	:	code in binary				notes
+
+							Update score
+							test (ball-y-position == brick-y-position)
+0x0000	:	0x0001					writes ball-y-position into address register
+0x0001	: 	0xFC10					writes ball-y-position from memory into data register
+0x0003	:	0X0003					writes brick-y-position into address register
+0x0004 	:	0XF1D0					writes brick-y-position - ball-y-position into data register
+0x0005  :	0X0010					checks if they are the same: (ball-y-position && brick-y-position == 0)
+0x0006  :	0XE305					jump to "end of loop" if data register != 0
+
+							test (ball-x-position == brick-x-position)
+0x0007	:	0X0000					writes ball-x-position into address register
+0x0008	: 	0XFC10					writes ball-x-position from memory into data register
+0x0009	:	0X0002					writes brick-x-position into address register
+0x000A 	:	0XF1D0					writes brick-x-position - ball-x-position into data register
+0x000B  :	0X0010					checks if they are the same: (ball-X-position && brick-X-position == 0)
+0x000C  :	0XE305					jump to "end of loop" if data register != 0
+
+							score +1
+0x000E	:	0X0004					load address score to address register
+0x000F	:	0XFDC8					score = score+1
+
+							end of loop
+0x0010	: 	0X0000					write ROM address of "update score" code to address register
+0x0011	: 	0XEFC7					jump to "update score"

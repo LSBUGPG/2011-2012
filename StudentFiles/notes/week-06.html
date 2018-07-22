@@ -1,0 +1,346 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+  <head>
+    <title>Week 6 notes</title>
+    <style type="text/css">
+      table
+      {
+      border-collapse:collapse;
+      }
+      table, tr, th, td
+      {
+      border:1px solid black;
+      padding-left:8px;
+      padding-right:8px;
+      }
+      th, td
+      {
+      min-width: 2em;
+      }
+    </style>
+    <link rel="stylesheet" title="plain" type="text/css" href="plain.css" />
+  </head>
+  <body>
+    <h2>Week 6 notes</h2>
+    <ol>
+      <li><h3>Recap</h3><p><ul>
+	    <li><a href="week-02.html">week 2</a>: Boolean logic</li>
+	    <li><a href="week-03.html">week 3</a>: numbers and other data types</li>
+	    <li><a href="week-04.html">week 4</a>: memory, registers, and loops</li>
+	    <li><a href="week-05.html">week 5</a>: programmable circuits</li>
+	    <li>we now have a single circuit that we can program to behave like any other circuit</li>
+	    <li>we still need to:<ul>
+		<li>automate the programming of this circuit</li>
+		<li>make some parts of the sequence dependent upon Boolean conditions</li>
+	    </ul></li>
+      </ul></li>
+      <li><h3>Program counter</h3><ul>
+	    <li>to automate the programming we need:<ul>
+		<li>a list of program settings</li>
+		<li>a pointer to where we are in that list</li></ul></li>
+	    <li>the program counter serves this purpose</li>
+	    <li>a special purpose register that can be set, reset, or count up</li>
+	    <p><img src="inside-PC.png" /></p>
+	    <p><ul><li>reset: sets the PC to 0</li>
+		<li>load: sets the PC to the input</li>
+		<li>inc: sets the PC to its current value +1</li>
+		<li>otherwise: it holds the same value</li></ul></p>
+	    <li>as usual, when we've understood it, we draw a box around it:</li>
+	    <p><img src="PC.png" /></p>
+	    <li>connect this to a memory chip containing our program setting instructions</li>
+	    <li>we're going to use a ROM chip for this:<ul>
+		<li>this follows the examples in the book</li>
+		<li>ROM is the same as RAM, but read-only (doesn't need load or input values)</li>
+		<li>early arcade machines and consoles used a separate ROM</li>
+		<li>modern computers tend to use main RAM for both program and data</li>
+		<li>this complicates the CPU design a little</li>
+		<li>it requires having separate fetch and execute cycles</li></ul></li>
+	    <p><img src="PC-ROM.png" /></p>
+	    <li>we can now hook this to our programmable circuit, but first...</li>
+      </ul></li>
+      <li><h3>Conditional jumps</h3><ul>
+	  <li>with a program counter in our programmable circuit we can add an extra instruction</li>
+	  <li>a jump means setting a new value to the program counter</li>
+	  <li>the program counter normally advances to the next instruction in ROM</li>
+	  <li>but setting the new value means the CPU will jump to a different instruction</li>
+	  <li>the address to jump to is copied in from the address register</li>
+	  <li>we can specify three new switches ("j" switches):<ul>
+	      <li>j1 means test less than zero</li>
+	      <li>j2 means test equal to zero</li>
+	      <li>j3 means test greater than zero</li>
+	  </ul></li>
+	  <li>performing some, all, or none of these tests on the ALU output gives us:</li>
+	  <p><table>
+	    <tr><th colspan="3">condition</th><th rowspan="3">meaning</th></tr>
+	    <tr><th>j1</th><th>j2</th><th>j3</th></tr>
+	    <tr><th>&lt;0</th><th>=0</th><th>&gt;0</th></tr>
+	    <tr><td>0</td><td>0</td><td>0</td><td>don't jump</td></tr>
+	    <tr><td>0</td><td>0</td><td>1</td><td>if ALU output &gt; 0 jump</td></tr>
+	    <tr><td>0</td><td>1</td><td>0</td><td>if ALU output == 0 jump</td></tr>
+	    <tr><td>0</td><td>1</td><td>1</td><td>if ALU output &gt;= 0 jump</td></tr>
+	    <tr><td>1</td><td>0</td><td>0</td><td>if ALU output &lt; 0 jump</td></tr>
+	    <tr><td>1</td><td>0</td><td>1</td><td>if ALU output != 0 jump</td></tr>
+	    <tr><td>1</td><td>1</td><td>0</td><td>if ALU output &lt;= 0 jump</td></tr>
+	    <tr><td>1</td><td>1</td><td>1</td><td>always jump</td></tr>
+	  </table></p>
+	  <li><p>the new switches added to our programmable counter:<ul>
+	      <li>"n" is the negative line from the ALU</li>
+	      <li>"z" is the zero line from the ALU</li>
+	      <li>"r" is a reset switch</li></ul></p>
+	  </li>
+	  <p><img src="PC-jump-logic.png" /></p>
+      </ul></li>
+      <li><h3>CPU</h3><ul>
+	  <li>combine all of pieces to make a full CPU:</li>
+	  <p><img src="inside-CPU.png" /></p>
+	  <li>again we can simplify the diagram by drawing a box around it:</li>
+	  <p><img src="CPU.png" /></p>
+	  <li>note: I've re-arranged the order of the wires a little</li>
+	  <p>a <a href="6502.jpeg">picture</a> of a real 8 bit CPU</p>
+	  <li>finally, we can connect together the program ROM, the CPU, and the RAM:</li>
+	  <p><img src="ROM-CPU-RAM.png" /></p>
+      </ul></li>
+      <li><h3>Machine code</h3><ul>
+	  <li>lastly we need to define how the machine instructions are encoded</li>
+	  <li>we have two types of instruction to encode:<ul>
+	      <li>address instruction: loads a number into the address register</li>
+	      <li>compute instruction: programs the ALU, "a", "d", and "j" switches</li>
+	  </ul></li>
+	  <h4>Address instruction</h4>
+	  <p>This instruction must have the MSB (bit number 16) set to 0. The rest of the bits encode "a", the 15 bits of number to load.</p> 
+	  <p><table>
+	      <tr>
+		<th>hexadecimal digit</th>
+		<th colspan="4">4</th>
+		<th colspan="4">3</th>
+		<th colspan="4">2</th>
+		<th colspan="4">1</th>
+	      </tr>
+	    <tr>
+	      <th>binary digit</th>
+	      <th>16</th>
+	      <th>15</th>
+	      <th>14</th>
+	      <th>13</th>
+	      <th>12</th>
+	      <th>11</th>
+	      <th>10</th>
+	      <th>9</th>
+	      <th>8</th>
+	      <th>7</th>
+	      <th>6</th>
+	      <th>5</th>
+	      <th>4</th>
+	      <th>3</th>
+	      <th>2</th>
+	      <th>1</th>
+	    </tr>
+	    <tr>
+	      <th>value</th>
+	      <td>0</td>
+	      <td>a15</td>
+	      <td>a14</td>
+	      <td>a13</td>
+	      <td>a12</td>
+	      <td>a11</td>
+	      <td>a10</td>
+	      <td>a9</td>
+	      <td>a8</td>
+	      <td>a7</td>
+	      <td>a6</td>
+	      <td>a5</td>
+	      <td>a4</td>
+	      <td>a3</td>
+	      <td>a2</td>
+	      <td>a1</td>
+	    </tr>
+	  </table></p>
+	  <h4>Compute instruction</h4>
+	  <p>This instruction must have the MSB (bit number 16) set to 1. The next two bits are not used but must be set to 1. The remaining bits are split between the "a", "c", "d", and "j" switches.</p> 
+	  <p><table>
+	      <tr>
+		<th>hexadecimal digit</th>
+		<th colspan="4">4</th>
+		<th colspan="4">3</th>
+		<th colspan="4">2</th>
+		<th colspan="4">1</th>
+	      </tr>
+	    <tr>
+	      <th>binary digit</th>
+	      <th>16</th>
+	      <th>15</th>
+	      <th>14</th>
+	      <th>13</th>
+	      <th>12</th>
+	      <th>11</th>
+	      <th>10</th>
+	      <th>9</th>
+	      <th>8</th>
+	      <th>7</th>
+	      <th>6</th>
+	      <th>5</th>
+	      <th>4</th>
+	      <th>3</th>
+	      <th>2</th>
+	      <th>1</th>
+	    </tr>
+	    <tr>
+	      <th>value</th>
+	      <td>1</td>
+	      <td>1</td>
+	      <td>1</td>
+	      <td>a</td>
+	      <td>c1</td>
+	      <td>c2</td>
+	      <td>c3</td>
+	      <td>c4</td>
+	      <td>c5</td>
+	      <td>c6</td>
+	      <td>d1</td>
+	      <td>d2</td>
+	      <td>d3</td>
+	      <td>j1</td>
+	      <td>j2</td>
+	      <td>j3</td>
+	    </tr>
+	  </table></p>
+	  <li>encode these in either binary or hexadecimal by grouping 4 bits</li>
+	  <li>together this is called machine code</li>
+	  <li>here again is a table for converting between hexadecimal and binary:</li>
+	  <p><table><tr><th>hexadecimal</th><th>binary</th><th>hexadecimal</th><th>binary</th></tr>
+	    <tr><td>0</td><td>0000</td><td>8</td><td>1000</td></tr>
+	    <tr><td>1</td><td>0001</td><td>9</td><td>1001</td></tr>
+	    <tr><td>2</td><td>0010</td><td>A</td><td>1010</td></tr>
+	    <tr><td>3</td><td>0011</td><td>B</td><td>1011</td></tr>
+	    <tr><td>4</td><td>0100</td><td>C</td><td>1100</td></tr>
+	    <tr><td>5</td><td>0101</td><td>D</td><td>1101</td></tr>
+	    <tr><td>6</td><td>0110</td><td>E</td><td>1110</td></tr>
+	    <tr><td>7</td><td>0111</td><td>F</td><td>1111</td></tr>
+	  </table></p>
+      </ul></li>
+      <li><h3>Worked examples</h3><ul>
+	  <li>take one of the examples from last week:</li>
+	  <pre>
+update the ball's height: ball-y-position = ball-y-position + ball-y-velocity
+set MSB=F number=0x0003
+set MSB=T a=T c=TTFFFF d=FTF
+set MSB=F number=0x0001
+set MSB=T a=T c=FFFFTF d=FFT
+	  </pre>
+	  <li>we could encode this in binary:</li>
+	  <pre>
+ROM   : code in binary          notes
+                                update ball-y-position: ball-y-position = ball-y-position + ball-y-velocity
+0x0000: 0000 0000 0000 0011     write address of ball-y-velocity to address register
+0x0001: 1111 1100 0001 0000     write ball-y-velocity from memory to data register
+0x0002: 0000 0000 0000 0001     write address of ball-y-position to address register
+0x0003: 1111 0000 1000 1000     write ball-y-position + ball-y-velocity to ball-y-position in RAM
+	  </pre>
+	  <li>(the notes here are an aid for us as human readers, the code fully describes the program)</li>
+	  <li>in hexadecimal:</li>
+	  <pre>
+ROM   : code       notes
+                   update ball-y-position: ball-y-position = ball-y-position + ball-y-velocity
+0x0000: 0x0003     write address of ball-y-velocity to address register
+0x0001: 0xFC10     write ball-y-velocity from memory to data register
+0x0002: 0x0001     write address of ball-y-position to address register
+0x0003: 0xF088     write ball-y-position + ball-y-velocity to ball-y-position in RAM
+	  </pre>
+	  <li>with the addition of the new jump switches we can put it all together:</li>
+	  <pre>
+RAM   :
+0x0000: ball-x-position
+0x0001: ball-y-position
+0x0002: ball-x-velocity
+0x0003: ball-y-velocity
+
+ROM   : code       notes
+                   update ball-y-position: ball-y-position = ball-y-position + ball-y-velocity
+0x0000: 0x0003     write address of ball-y-velocity to address register
+0x0001: 0xFC10     write ball-y-velocity from memory to data register
+0x0002: 0x0001     write address of ball-y-position to address register
+0x0003: 0xF088     write ball-y-position + ball-y-velocity to ball-y-position in RAM
+
+                   check if the ball is off the top: (ball-y-position-480 &gt;= 0)
+0x0004: 0x01E0     write 480 to address register
+0x0005: 0xEC10     write value of address register to data register
+0x0006: 0x0001     write address of ball-y-position to address register
+0x0007: 0xF1D0     write ball-y-position - 480 to data register (B-A)
+0x0008: 0x0010     write ROM address of "invert ball-y-velocity" code to address register
+0x0009: 0xE303     jump to "invert ball-y-velocity" code if data register &gt;= 0
+
+                   check if the ball is off the bottom: (ball-y-position &lt; 0)
+0x000A: 0x0001     write address of ball-y-position to address register
+0x000B: 0xFC10     write ball-y-position to data register
+0x000C: 0x0010     write ROM address of "invert ball-y-velocity" code to address register
+0x000D: 0xE304     jump to "invert ball-y-velocity" code if data register &lt; 0
+0x000E: 0x0012     write ROM address of "end of loop" code to address register
+0x000F: 0xEFC7     jump to "end of loop" code
+
+                   invert ball-y-velocity: ball-y-velocity = -ball-y-velocity
+0x0010: 0x0003     write address of ball-y-velocity to address register
+0x0011: 0xFCC8     write -(ball-y-velocity) to ball-y-velocity in memory
+
+                   end of loop
+0x0012: 0x0000     write ROM address of "update ball-y-position" code to address register
+0x0013: 0xEFC7     jump to "update ball-y-position"
+	  </pre>
+	  <li>programming notes:<ul>
+	      <li>need to use the data register to temporarily store the result before making a jump</li>
+	      <li>can't fill in the address of a jump until I've written the destination code</li>
+	      <li>example of short circuit evalution (feature of C family languages)</li>
+	      <li>in the case of if (X || Y) we can short circuit to "then" code if X is true</li>
+	      <li>in the case of if (X && Y) we can short circuit out if X is false</li> 
+	  </ul></li>
+	  <br />
+	  <li>optimisations:<ul>
+	      <li>doing the same with less instructions</li>
+	      <li>write the new ball-y-position to data register after update</li>
+	      <li>reverse the test order and re-use ball-y-position in the data register</li>
+	      <li>invert the second test and jump straight to the end</li>
+	  </ul></li>
+	  <pre>
+RAM   :
+0x0000: ball-x-position
+0x0001: ball-y-position
+0x0002: ball-x-velocity
+0x0003: ball-y-velocity
+
+ROM   : code       notes
+                   update ball-y-position: ball-y-position = ball-y-position + ball-y-velocity
+0x0000: 0x0003     write address of ball-y-velocity to address register
+0x0001: 0xFC10     write ball-y-velocity from memory to data register
+0x0002: 0x0001     write address of ball-y-position to address register
+0x0003: 0xF098     write ball-y-position + ball-y-velocity to ball-y-position in RAM and data register
+
+                   check if the ball is off the bottom: (ball-y-position &lt; 0)
+0x0004: 0x000A     write ROM address of "invert ball-y-velocity" code to address register
+0x0005: 0xE304     jump to "invert ball-y-velocity" code if data register &lt; 0
+
+                   check if the ball is off the top: (ball-y-position-480 &gt;= 0)
+0x0006: 0x01E0     write 480 to address register
+0x0007: 0xE4D0     write ball-y-position - 480 to data register (A-B)
+0x0008: 0x000C     write ROM address of "end of loop" code to address register
+0x0009: 0xE304     jump to "end of loop" code if data register &lt; 0
+
+                   invert ball-y-velocity: ball-y-velocity = -ball-y-velocity
+0x000A: 0x0003     write address of ball-y-velocity to address register
+0x000B: 0xFCC8     write -(ball-y-velocity) to ball-y-velocity in memory
+
+                   end of loop
+0x000C: 0x0000     write ROM address of "update ball-y-position" code to address register
+0x000D: 0xEFC7     jump to "update ball-y-position"
+	  </pre>
+      </ul></li>
+      <li><h3>Exercise</h3><ul>
+	  <li>create the machine code equivalent of your circuits from previous weeks</li>
+	  <li>include a jump at the end, to loop back to the beginning</li>
+	  <li>keep track of the time it takes you to code the first step</li>
+	  <li>make an estimate of your remaining time</li>
+	  <li>create your machine code program in a text file</li>
+	  <li>check in your estimate, work log, and machine code</li>
+	  <li>4pm next Tuesday</li>
+      </ul></li>
+    </ol>
+  </body>
+</html>

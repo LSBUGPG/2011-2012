@@ -1,0 +1,442 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+  <head>
+    <title>Week 7 notes</title>
+    <style type="text/css">
+      table
+      {
+      border-collapse:collapse;
+      }
+      table, tr, th, td
+      {
+      border:1px solid black;
+      padding-left:8px;
+      padding-right:8px;
+      }
+      th, td
+      {
+      min-width: 2em;
+      }
+    </style>
+    <link rel="stylesheet" title="plain" type="text/css" href="plain.css" />
+  </head>
+  <body>
+    <h2>Week 7 notes</h2>
+    <ol>
+      <li><h3>Recap</h3><ul>
+	    <li><a href="week-02.html">week 2</a>: Boolean logic</li>
+	    <li><a href="week-03.html">week 3</a>: numbers and other data types</li>
+	    <li><a href="week-04.html">week 4</a>: memory, registers, and loops</li>
+	    <li><a href="week-05.html">week 5</a>: programmable circuits</li>
+	    <li><a href="week-06.html">week 6</a>: machine code</li>
+	    <li>we said before: we can (theoretically) build any game from circuits</li>
+	    <li>we can in practice build any game in machine code</li>
+	    <li>all languages translate eventually into machine code</li>
+      </ul></li>
+      <li><h3>Assembler</h3><ul>
+	  <li>a tool and a language for generating machine code</li>
+	  <li>the language uses mnemonics and conventions to represent machine code and data</li>
+	  <li>the tool converts the text mnemonics into machine instructions 1 to 1</li>
+	  <li>we are diverging a little from the book now to consider more usual systems</li>
+	  <li>we'll define an assembler language that's closer to x86 machine code</li>
+	  <li><h4>general rules</h4><ul>
+	      <li>assembler programs are plain text files</li>
+	      <li>they have the .asm extension</li>
+	      <li>a semi-colon ';' represents the beginning of a comment, ignored by the assembler</li>
+	      <li>one rule when making our assembler program is:<ul>
+		  <li>if a character is ';' skip to the end of the line</li></ul></li>
+	  </ul></li>
+	  <li><h4>directives</h4><ul>
+	      <li>assemblers generate two sections we worked out by hand: the data, and the code</li>
+	      <li>to define the two segments we'll use commands known as directives</li>
+	      <li>directives are commands for the assembler and begin with a '.'</li>
+	      <li>so another rule for our assembler program is:<ul>
+		  <li>if a character is '.' a directive will follow</li></ul></li>
+	      <li>a the layout of a typical assembler file would be as follows:</li>
+	      <pre>
+; typical layout of an assembler program
+
+.data
+;   your data definitions go here
+;   ...
+;   ...
+
+.code
+;   your machine code instructions go here
+;   ...
+;   ...
+
+end
+	      </pre>
+	  </ul></li>
+	  <li><h4>labels</h4><ul>
+	      <li>assemblers need to identify the location of things in RAM and ROM</li>
+	      <li>another rule for our assembler program is:<ul>
+		  <li>if a line starts with a letter it's a label or mnemonic</li>
+		  <li>if the label ends with a colon ':' it's a code label</li>
+		  <li>if it ends with a space or other operator it's a data label or mnemonic</li>
+		  <li>therefore you cannot have spaces in labels or mnemonics</li>
+		  <li>also avoid the use of symbols +,-,*,/,&amp;,|,! as they may get interpreted</li>
+		  <li>underscore "_" is allowed to separate words in long labels</li>
+		  <li>if it's not in the list of its known mnemonics it's a data label</li>
+		  <li>following a data label is the type of data:</li>
+		  <p><table>
+		      <tr><th>type</th><th>meaning</th></tr>
+		      <tr><td>=</td><td>a constant value follows</td></tr>
+		      <tr><td>byte</td><td>space is allocated in RAM and initial 8 bit data values follow</td></tr>
+		      <tr><td>word</td><td>space is allocated in RAM and initial 16 bit data values follow</td></tr>
+		  </table></p>
+		  <li>the data that follows will be comma separated decimal numbers</li>
+		  <li>or hexadecimal numbers if the number ends in "h" e.g. 0ffh</li>
+		  <li>note: hexadecimal numbers need to start 0 to avoid confusion with labels</li>
+	      </ul></li>
+	      <br />
+	      <li>with these rules we can lay out the data for the example code as follows:</li>
+	      <pre>
+     screen_width  = 640       ; these symbols are simply replaced by the assembler
+     screen_height = 480       ; by the given values wherever they are found in the code
+
+.data
+     ball_x_position word 320  ; these values are allocated positions in RAM
+     ball_y_position word 240  ; and initialized to the values given here
+     ball_x_velocity word 0    ; the assembler can generate additional instructions
+     ball_y_velocity word 1    ; to do this before the program starts
+	      </pre>
+	  </ul></li>
+	  <li><h4>instructions: mnemonics and operands</h4><ul>
+	      <li>a mnemonic is a shorthand for describing machine code operations</li>
+	      <li>last week, we described what machine code instructions did e.g.:</li>
+	      <pre>
+0x0003   ; load the address of ball_y_velocity to the address register
+	      </pre>
+	      <li>we could define a mnemonic "la" to mean "load address":</li><pre>
+     la   a, ball_y_velocity    ; load address of ball_y_velocity into "a" register
+	      </pre>
+	      <li>convention in assembly languages is to list the destination first</li>
+	      <li>also, if the destination is the same as the source it can be inferred</li>
+	      <li>we can do the same for the whole set of functions:</li>
+	      <p><table>
+		  <tr><th>mnemonic</th><th>meaning</th></tr>
+		  <tr><td>la a, label</td><td>load the address of "label" to register "a"</td></tr>
+		  <tr><td>mov reg, value</td><td>copy to register the given value<ul>
+			<li>any positive value can be copied to "a"</li>
+			<li>"d" and "[a]" can only be assigned 1, 0, or -1</li></ul></td></tr>
+		  <tr><td>mov reg, reg</td><td>copy to the first register the value of the other</td></tr>
+		  <tr><td>add reg, reg, reg</td><td>store in the first register, the sum of the other two</td></tr>
+		  <tr><td>add reg, reg</td><td>as above but the first register is both the destination and the source</td></tr>
+		  <tr><td>inc reg, reg</td><td>store in the first register, the second + 1</td></tr>
+		  <tr><td>inc reg</td><td>increment the register</td></tr>
+		  <tr><td>and reg, reg, reg</td><td>store in the first register, the bitwise and of the other two</td></tr>
+		  <tr><td>and reg, reg</td><td>as above but the first register is both the destination and the source</td></tr>
+		  <tr><td>or reg, reg, reg</td><td>store in the first register, the bitwise or of the other two</td></tr>
+		  <tr><td>or reg, reg</td><td>as above but the first register is both the destination and the source</td></tr>
+		  <tr><td>sub reg, reg, reg</td><td>store in the first register, the second minus the third</td></tr>
+		  <tr><td>sub reg, reg</td><td>as above but the first register is both the destination and the source</td></tr>
+		  <tr><td>dec reg, reg</td><td>store in the first register, the second - 1</td></tr>
+		  <tr><td>dec reg</td><td>decrement the register</td></tr>
+		  <tr><td>neg reg, reg</td><td>store in the first register, the negative of the second</td></tr>
+		  <tr><td>neg reg</td><td>negate the register</td></tr>
+		  <tr><td>not reg, reg</td><td>store in the first register, the logical not of the second</td></tr>
+		  <tr><td>not reg</td><td>apply a logical not to the register</td></tr>
+		  <tr><td>jmp a</td><td>jump to the code pointed to by register "a"</td></tr>
+		  <tr><td>je a</td><td>jump to "a" if the value of the "d" register is 0</td></tr>
+		  <tr><td>jne a</td><td>jump to "a" if the value of the "d" register is not 0</td></tr>
+		  <tr><td>jg a</td><td>jump to "a" if the value of the "d" register is &gt; 0</td></tr>
+		  <tr><td>jl a</td><td>jump to "a" if the value of the "d" register is &lt; 0</td></tr>
+		  <tr><td>jge a</td><td>jump to "a" if the value of the "d" register is &gt;= 0</td></tr>
+		  <tr><td>jle a</td><td>jump to "a" if the value of the "d" register is &lt;= 0</td></tr>
+	      </table></p>
+	      <li>in this table:<ul>
+		  <li>label means an allocated data or code label defined</li>
+		  <li>value means a number or a previously defined constant label</li>
+		  <li>and, reg means any of:</li>
+		  <p><table>
+		      <tr><th>operand label</th><th>meaning</th></tr>
+		      <tr><td>a</td><td>address register value</td></tr>
+		      <tr><td>d</td><td>data register value</td></tr>
+		      <tr><td>[a]</td><td>value in memory pointed to by address register</td></tr>
+		  </table></p>
+	      </ul></li>
+	      <li>the following shows these assembler mnemonics as comments to my machine code from last week:</li>
+	      <pre>
+;                  assembly mnemonics
+; definitions
+                 ; screen_width  = 640
+                 ; screen_height = 480
+
+
+; .data
+;  RAM: value      assembly mnemonics
+
+0x0000: 0x0140   ; ball_x_position word 320
+0x0001: 0x00F0   ; ball_y_position word 240
+0x0002: 0x0000   ; ball_x_velocity word 0
+0x0003: 0x0001   ; ball_y_velocity word 1
+
+
+; .code
+;  ROM: code       assembly mnemonics
+
+; update_ball_y_position:
+0x0000: 0x0003   ; la   a, ball_y_velocity
+0x0001: 0xFC10   ; mov  d, [a]
+0x0002: 0x0001   ; la   a, ball_y_position
+0x0003: 0xF098   ; add  d[a], [a], d				
+						                                                                   
+; ball_off_bottom:
+0x0004: 0x000A   ; la   a, invert_ball_velocity
+0x0005: 0xE304   ; jl   a
+						                                                                   
+; ball_off_top:
+0x0006: 0x01E0   ; mov  a, screen_height
+0x0007: 0xE4D0   ; sub  d, a
+0x0008: 0x000C   ; la   a, end_of_loop
+0x0009: 0xE304   ; jl   a
+						                                                                   
+; invert_ball_y_velocity:
+0x000A: 0x0003   ; la   a, ball_y_velocity
+0x000B: 0xFCC8   ; neg  [a]
+						                                                                   
+; end_of_loop:
+0x000C: 0x0000   ; load a, update_ball_y_position
+0x000D: 0xEFC7   ; jmp  a
+	      </pre>
+	      <li>and as pure assembler code, with comments</li>
+	      <pre>
+     screen_width  = 640            ; these symbols are simply replaced by the assembler
+     screen_height = 480            ; by the given values wherever they are found in the code
+
+.data
+     ball_x_position word 320       ; these values are allocated positions in RAM
+     ball_y_position word 240       ; and initialized to the values given here
+     ball_x_velocity word 0         ; the assembler can generate additional instructions
+     ball_y_velocity word 1         ; to do this before the program starts
+
+
+.code
+update_ball_y_position:             ; ball_y_position = ball_y_position + ball_y_velocity	      
+     la   a, ball_y_velocity        ; load address of data "ball_y_velocity" to register "a"	      
+     mov  d, [a]                    ; move value at address "a" to register "d"		      
+     la   a, ball_y_position        ; load address of data "ball_y_position" to register "a"	      
+     add  d[a], [a], d              ; add value at address "a" to register "d" and store	      
+                                    ; the result in register "d" and at address "a"		      
+				                                                                    
+ball_off_bottom:                    ; (ball_y_position &lt; 0)					      
+     la   a, invert_ball_velocity   ; load address of code "invert_ball_velocity" to register "a"    
+     jl   a                         ; jump to address "a" if register "d" is &lt; 0		      
+				                                                                    
+ball_off_top:                       ; (ball_y_position-screen_height &gt;= 0)			      
+     mov  a, screen_height          ; move value "screen_height" to register "a"		      
+     sub  d, a                      ; subtract register "a" from register "d"			      
+     la   a, end_of_loop            ; load address of code "end_of_loop" to register "a"	      
+     jl   a                         ; jump to address "a" if register "d" is &lt; 0		      
+				                                                                    
+invert_ball_y_velocity:             ; ball_y_velocity = -ball_y_velocity			      
+     la   a, ball_y_velocity        ; load address of data "ball_y_velocity" to register "a"	      
+     neg  [a]                       ; negate the value at address "a"				      
+				                                                                    
+end_of_loop:			                                                                    
+     la   a, update_ball_y_position ; load address of code "update_ball_y_position" to register "a"  
+     jmp  a                         ; jump to address "a"
+	      </pre>
+	  </ul></li>
+	  <li><h4>two pass assembly</h4><ul>
+	      <li>as you found out last week, machine code programming is tricky</li>
+	      <li>a program to detect each mnemonic and generate code would fail at the first forward jump</li>
+	      <li>the solution to this is to make two passes</li>
+	      <li>in the first pass, the assembler builds a symbol table for addresses</li>
+	      <li>if it finds a new symbol, it allocates a slot and adds it to the table</li>
+	      <li>in the second pass, it uses the table when it needs to resolve an address</li>
+	      <li>a walk-through of the first pass of the above would generate the following table:</li>
+	      <p><table>
+		  <tr><th>symbol</th><th>address</th></tr>
+		  <tr><td>ball_x_position</td><td>RAM 0x0000</td></tr>
+		  <tr><td>ball_y_position</td><td>RAM 0x0001</td></tr>
+		  <tr><td>ball_x_velocity</td><td>RAM 0x0002</td></tr>
+		  <tr><td>ball_y_velocity</td><td>RAM 0x0003</td></tr>
+		  <tr><td>update_ball_y_position</td><td>ROM 0x0000</td></tr>
+		  <tr><td>ball_off_bottom</td><td>ROM 0x0004</td></tr>
+		  <tr><td>ball_off_top</td><td>ROM 0x0006</td></tr>
+		  <tr><td>invert_ball_y_velocity</td><td>ROM 0x000A</td></tr>
+		  <tr><td>end_of_loop</td><td>ROM 0x000C</td></tr>
+	      </table></p>
+	  </ul></li>
+      </ul></li>
+      <li><h3>x86 platform and assembly language differences</h3><ul>
+	  <li>a real platform expands on our minimal platform:<p><ul>
+	      <li>more registers</li>
+	      <li>multiple data widths</li>
+	      <li>more instructions</li>
+	      <li>more addressing modes for operands</li>
+	      <li>and more assembler directives in the assembler</li>
+	  </ul></p></li>
+	  <li>all of this is extensively documented in the following manuals:<p><ul>
+	      <li><a href="http://www.intel.com/content/dam/www/public/us/en/documents/manuals/64-ia-32-architectures-software-developer-manual-325462.pdf">Intel Instruction Manual</a></li>
+	      <li><a href="http://msdn.microsoft.com/en-us/library/afzk3475.aspx">Microsoft Macro Assembler Reference</a></li>
+	  </ul></p></li>
+	  <li>these are big references, but you'll only need them for serious assembler programming</li>
+	  <li><h4>x86 registers</h4>
+	    <p><table>
+		<tr><th>register name</th><th>as 32 bit</th><th>as 16 bit</th><th>as top 8 bits in 16</th><th>as bottom 8 bits in 16</th></tr>
+		<tr><td>a</td><td>eax</td><td>ax</td><td>ah</td><td>al</td></tr>
+		<tr><td>b</td><td>ebx</td><td>bx</td><td>bh</td><td>bl</td></tr>
+		<tr><td>c</td><td>ecx</td><td>cx</td><td>ch</td><td>cl</td></tr>
+		<tr><td>d</td><td>edx</td><td>dx</td><td>dh</td><td>dl</td></tr>
+		<tr><td>source pointer</td><td colspan="4">esi</td></tr>
+		<tr><td>destination pointer</td><td colspan="4">edi</td></tr>
+		<tr><td>stack pointer</td><td colspan="4">esp</td></tr>
+		<tr><td>base pointer</td><td colspan="4">ebp</td></tr>
+	    </table></p></li>
+	  <li><h4>the stack</h4><ul>
+	      <li>a stack is a useful programming concept built in to many processors</li>
+	      <li>the stack pointer points to an area of RAM called the stack</li>
+	      <li>it can be any free area of RAM</li>
+	      <li>to temporarily store something, push it on to the stack</li>
+	      <li>to get it back, pop it off the stack</li>
+	      <li>you get values back in the reverse order (last in, first out)</li>
+	      <li>imagine a stack of books, the last one on the top is the first one off</li>
+	      <li>useful for storing where to come back to after finishing a subroutine</li>
+	  </ul></li>
+	  <li><h4>subroutines</h4><ul>
+	      <li>solve the problem of making code re-usable</li>
+	      <li>use stack to know where to return to</li>
+	      <li>also to pass parameters to the subroutine</li>
+	      <li>we'll come back to this in the example program</li>
+	  </ul></li>
+	  <li><h4>additional instructions</h4>
+	    <p><table>
+		<tr><th>instruction</th><th>meaning</th></tr>
+		<tr><td>.386</td><td>use only 386 instructions</td></tr>
+		<tr><td>.model flat, c</td><td>a sensible default memory model and calling convention</td></tr>
+		<tr><td>dword</td><td>a 32 bit data type</td></tr>
+		<tr><td>label proc</td><td>mark the start of a routine and name it "label"</td></tr>
+		<tr><td>label endp</td><td>define the end of the "label" procedure</td></tr>
+		<tr><td>lea reg, label</td><td>load effective address: same as load address in our minimal platform</td></tr>
+		<tr><td>cmp reg, value</td><td>compare reg with value</td></tr>
+		  <tr><td>jmp label</td><td>jump to label</td></tr>
+		  <tr><td>je label</td><td>jump to label if the previous result was 0</td></tr>
+		  <tr><td>jne label</td><td>jump to label if the previous result was not 0</td></tr>
+		  <tr><td>jg label</td><td>jump to label if the previous result was &gt; 0</td></tr>
+		  <tr><td>jl label</td><td>jump to label if the previous result was &lt; 0</td></tr>
+		  <tr><td>jge label</td><td>jump to label if the previous result was &gt;= 0</td></tr>
+		  <tr><td>jle label</td><td>jump to label if the previous result was &lt;= 0</td></tr>
+		<tr><td>push reg</td><td>push register value onto the stack</td></tr>
+		<tr><td>pop reg</td><td>pop register value from the stack</td></tr>
+		<tr><td>call label</td><td>push next instruction address onto the stack and jump to label</td></tr>
+		<tr><td>ret</td><td>pop next instruction address from the stack</td></tr>
+		<tr><td>shl reg, value</td><td>shift bits left (means times by 2^value)</td></tr>
+		<tr><td>shl reg, reg8</td><td>as above shifted by an 8 bit register</td></tr>
+		<tr><td>shr reg, value</td><td>shift bits right (means divide by 2^value)</td></tr>
+		<tr><td>shr reg, reg8</td><td>as above shifted by an 8 bit register</td></tr>
+		<tr><td>imul reg, value</td><td>integer multiply the register by the value</td></tr>
+		<tr><td>bt reg, reg</td><td>copy the bit in the first register indicated by the second register to the carry flag</td></tr>
+		<tr><td>setc reg8</td><td>set 8 bit register to 1 if the carry flag is set, otherwise set to 0</td></tr>
+		<tr><td>end</td><td>the x86 assembler program must end with this directive</td></tr>
+	    </table></p>
+	  </li>
+	  <li><h4>additional addressing modes</h4>
+	    <p><table>
+		<tr><th>operand</th><th>meaning</th></tr>
+		<tr><td>[label]</td><td>directly address the value in memory</td></tr>
+		<tr><td>[reg+value]</td><td>address the value in memory offset by the given value</td></tr>
+		<tr><td>[reg-value]</td><td>as above</td></tr>
+		<tr><td>[reg+reg]</td><td>address the value in memory offset by second register</td></tr>
+		<tr><td>[reg-reg]</td><td>as above</td></tr>
+		<tr><td>byte ptr [address]</td><td>treat the pointer as a pointer to an 8 bit value</td></tr>
+	    </table></p>
+	  </li>
+	  <li><h4>expression evaluation</h4><ul>
+	      <li>the assembler can calculate and resolve expressions for the programmer</li>
+	      <li>e.g. (640*480)/8 is replaced with the result during the assemble stage</li>
+	      <li>constant definitions can also be used in these calculations</li>
+	      <li>e.g. centre_x = screen_width / 2</li>
+	      <li>no instructions or data are generated, the result is replaced in the code</li>
+	  </ul></li>
+      </ul></li>
+      <li><h3>Experimenting with assembler</h3><ul>
+	  <li>if you want to try building and running your own assembler programs on PC:<ul>
+	      <li>open "Visual Studio Express 2010"</li>
+	      <li>choose "File &rarr; New &rarr; Project..."</li>
+	      <li>then choose "Visual C++ &rarr; Win32" as your template</li>
+	      <li>and pick "Win32 Project Visual C++" as your project type</li>
+	      <li>in the "Name" box enter a title for your project e.g. "MyGame"</li>
+	      <li>untick the "Create directory for solution" box if it is ticked</li>
+	      <li>your can change where your project will go in the "Location box"</li>
+	      <li>I recommend you choose your SVN folder</li>
+	      <li>when you're done, click "OK" to proceed</li>
+	      <li>when the wizard dialog box opens, click on the "Next" button</li>
+	      <li>then choose "Windows application"</li>
+	      <li>tick the "Empty project" box</li>
+	      <li>then click "Finish"</li>
+	      <li>you should now have a project entry in your "Solution Explorer tab"</li>
+	      <li>right click on this icon and choose "Build Customizations..."</li>
+	      <li>tick the box called "masm (.targets, .props)"</li>
+	      <li>click "OK"</li>
+	      <li>this enables Visual Studio to compile x86 assembler files</li>
+	      <li>copy the file "emulator.obj" from the "notes" folder to your project's folder</li>
+	      <li>now right click on the "Source Files" folder in the "Solution Explorer" tab</li>
+	      <li>choose "Add &rarr; Existing Item..."</li>
+	      <li>choose the file "emulator.obj"</li>
+	      <li>right click on "Source Files" again</li>
+	      <li>choose "Add &rarr; New Item..."</li>
+	      <li>choose "C++ File" as the type</li>
+	      <li>but in the "Name" box, enter a file name ending in ".asm", e.g. "MyGame.asm"</li>
+	      <li>you can enter the following assembler code to get you started:</li>
+	      <pre>
+.386                                                   ; this declares the allowable instructions (.386 is widely compatible)
+.model flat, c                                         ; this declares the memory model and calling convention, this is a sensible default
+
+     screen_width         = 640                        ; calculations to find the offset in bytes to the centre of the screen
+     screen_centre_offset = (240*screen_width+320)/8   ; you could replace it with the single result value 19240 
+                                                       ; but leaving the calculation in helps to document the program and
+                                                       ; allows you to modify the program more easily
+
+public screen_pixels                                   ; this allows the emulator code to link in and set this value
+public keyboard_state                                  ; this allows the emulator code to link in and set this value
+
+.data                                                  ; this directive begins the data segment, put your data items below
+
+     screen_pixels  dword    ?                         ; the Windows code fills in this value
+     keyboard_state dword    ?                         ; the Windows code fills in this value
+
+
+.code                                                  ; this directive begins the code segment, put your assembler code below
+
+machine_code_program proc                              ; this creates a symbol named machine_code_program to link with the emulator code
+
+     mov  eax, [screen_pixels]                         ; find the start of screen memory
+     mov  byte ptr [eax+screen_centre_offset], 01h     ; set last pixel on byte at centre of screen
+     ret                                               ; done
+
+machine_code_program endp                              ; this ends the machine_code_program code block
+                                                       ; if you want to add extra subroutines, add them below between:
+                                                       ; subroutine_name proc 
+                                                       ; subroutine_name endp 
+
+end                                                    ; the asm file must end with this instruction
+	      </pre>
+	      <li>to compile your program choose "Debug &rarr; Build Solution"</li>
+	      <li>Windows program emulates a monochrome screen 640x480 and keyboard</li>
+	      <li>a list of <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/dd375731%28v=vs.85%29.aspx">virtual keycodes</a></li>
+	      <li>to test your program choose "Debug &rarr; Start Debugging"</li>
+	      <li>to debug your program line by line, right click the first line of your program</li>
+	      <li>choose "Run To Cursor"</li>
+	      <li>now you can step with F10 and F11</li>
+	      <li>and you can add registers to the "Watch" window to examine their values</li>
+	  </ul></li>
+      </ul></li>
+      <li><h3>Pong in x86 assembler</h3><ul>
+	  <li>demonstrate x86 instruction set</li>
+	  <li>sprite drawing code demonstrates use of subroutines</li>
+      </ul></li>
+      <li><h3>Exercise</h3><ul>
+	  <li>create an x86 assembler version of your machine code from last week</li>
+	  <li>keep track of the time it takes you to code the first step</li>
+	  <li>make an estimate of your remaining time</li>
+	  <li>create your machine code program in a .asm file</li>
+	  <li>check in your estimate, work log, and machine code</li>
+	  <li>4pm next Tuesday</li>
+      </ul></li>
+    </ol>
+  </body>
+</html>

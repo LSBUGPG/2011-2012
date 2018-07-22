@@ -1,0 +1,28 @@
+RAM    :
+0x0001 : ghost-x-pos
+0x0002 : pacman-x-pos
+0x0003 : ghost-y-pos
+0x0004 : pacman-x-pos
+0x0005 : lives
+
+ROM    :
+0x0000 : 0x0001 (write address of ghost-x-pos to address register)
+0x0001 : 0xFC10 (write ghost-x-pos to data register)
+0x0002 : 0x0002 (write address of pacman-x-pos to address register)
+0x0003 : 0xF4D0 (1111 0100 1101 0000) (subtract data register from address register and write to data register) 
+0x0004 : 0x000E
+0x0005 : 0xE305 (1110 0011 0000 0101) if data != 0 then jump to end
+
+0x0006 : 0x0003 (write address of ghost-y-pos to address register)
+0x0007 : 0xFC10 (write ghost-y-pos to data register)
+0x0008 : 0x0004 (write address of pacman-y-pos to address register)
+0x0009 : 0xF4D0 (1111 0100 1101 0000) (subtract data register from address register and write to data register)
+0x000A : 0x000E
+0x000B : 0xE305 (1110 0011 0000 0101) (if data != 0 then jump to end)
+
+0x000C : 0x0005 (write address of lives to address register)
+0x000D : 0xFC88 (1111 1100 1000 1000) (subtract one from lives in memory)
+
+end
+0x000E : 0x0000
+0x000F : 0xEFC7 (jump to start)

@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+  <head>
+    <title>Week 8 notes</title>
+    <style type="text/css">
+      table
+      {
+      border-collapse: collapse;
+      }
+      table, tr, th, td
+      {
+      border: 1px solid black;
+      padding-left: 8px;
+      padding-right: 8px;
+      }
+      th, td
+      {
+      min-width: 2em;
+      }
+      pre
+      {
+      border-style: solid
+      }
+      .comment
+      {
+      color: green;
+      }
+    </style>
+    <link rel="stylesheet" title="plain" type="text/css" href="plain.css" />
+  </head>
+  <body>
+    <h2>Week 8 notes</h2>
+    <ol>
+      <li><h3>Recap</h3><ul>
+	  <li><a href="week-02.html">week 2</a>: Boolean logic</li>
+	  <li><a href="week-03.html">week 3</a>: numbers and other data types</li>
+	  <li><a href="week-04.html">week 4</a>: memory, registers, and loops</li>
+	  <li><a href="week-05.html">week 5</a>: programmable circuits</li>
+	  <li><a href="week-06.html">week 6</a>: machine code</li>
+	  <li><a href="week-07.html">week 7</a>: assembler</li>
+	  <li>we can in practice write any game in pure assembler</li>
+	  <li>what are the problems as we scale up to bigger game designs?<ul>
+	      <li>long winded</li>
+	      <li>detailed management of registers (and pipelines and memory)</li>
+	      <li>machine specific</li>
+	  </ul></li>
+      </ul></li>
+      <li><h3>Third generation languages</h3><ul>
+	  <li>These include:<ul>
+	      <li>C</li>
+	      <li>C++</li>
+	      <li>Objective-C</li>
+	      <li>C#</li>
+	      <li>Java</li>
+	      <li>Javascript</li>
+	  </ul></li>
+	  <li>Break dependence on detailed understanding of the platform.</li>
+	  <li>Manage the allocation of CPU resources.</li>
+	  <li>Explain the difference between compilation vs interpretation.</li>
+	  <li>Use of virtual machines: compile to byte code.</li>
+	  <li>Statically typed vs dynamically types languages.</li>
+	  <li>Declarative vs procedural languages.</li>
+	  <li>Preprocessing: C, C++.</li>
+	  <li>Tokenizing to create a parsing tree.</li>
+	  <li>Generation of machine code or byte code.</li>
+	  <li>Allocation of registers.</li>
+      </ul></li>
+      <li><h3>Structured programming</h3><ul>
+	  <li>Programming with language features such as<ul>
+	      <li>conditional blocks</li>
+	      <li>loops</li>
+	  </ul></li>
+	  <li>Birds eye view of the Pong assembler program:</li>
+	  <p><a href="pong-flow.png"><img src="pong-flow.png" width="100%"/></a></p>
+	  <li>Pong in C++ without using structured programming features:</li>
+	  <p><a href="pong-flow-cpp-01.png"><img src="pong-flow-cpp-01.png" width="100%" /></a></p>
+	  <li>Pong in C++ using structured programming features:</li>
+	  <p><a href="pong-flow-cpp-02.png"><img src="pong-flow-cpp-02.png" width="100%" /></a></p>
+      </ul></li>
+      <li><h3>C++ Language</h3>
+	  <p>A walk-through of the syntax of C++ using Pong code:<ul>
+	      <li>comments // and /* */ commenting practice</li>
+	      <li>formatting and punctuation</li>
+	      <li>data definitions const and variable</li>
+	      <li>expressions: shift operators &lt;&lt; and &gt;&gt; and %</li>
+	      <li>variable scope: global and local</li>
+	      <li>types: int, bool, unsigned char, and pointer types</li>
+	      <li>array types and 2D arrays</li>
+	      <li>literal values: decimal, hexadecimal, ASCII</li>
+	      <li>subroutine declaration and definition</li>
+	      <li>caller arguments</li>
+	      <li>function parameters</li>
+	      <li>if then else structures</li>
+	      <li>ternary (condition)?a:b structure</li>
+	      <li>loop structure: break and continue</li>
+	      <li>switch case structure</li>
+	      <li>array access and conversion to pointers</li>
+	  </ul></p>
+      </li>
+      <li><h3>Javascript Language</h3>
+	  <p>A walk-through of the syntax of Javascript using Pong code:<ul>
+	      <li>comments as in C++</li>
+	      <li>formatting and punctuation</li>
+	      <li>data definition variable only private and public</li>
+	      <li>same operators</li>
+	      <li>variable scope: global and local</li>
+	      <li>types: int, enumerations, platform specific e.g. Texture2D</li>
+	      <li>compound types: Rect, Vector2, etc.</li>
+	      <li>array types and initialization</li>
+	      <li>literal values: decimal, hexadecimal, and enumerated values</li>
+	      <li>subroutine declaration and definition</li>
+	      <li>caller arguments</li>
+	      <li>function parameters</li>
+	      <li>if then else structures (same as C++)</li>
+	      <li>loop structure: break and continue (same as C++)</li>
+	      <li>switch case structure</li>
+	      <li>array access, no pointers</li>
+	      <li>global objects Input and GUI</li>
+	  </ul></p>
+      </li>
+      <li><h3>Exercise</h3><ul>
+	  <li>No exercise this week: work on your assessment project</li>
+	  <li>Note on collaborations for assessment</li>
+      </ul></li>
+    </ol>
+  </body>
+</html>

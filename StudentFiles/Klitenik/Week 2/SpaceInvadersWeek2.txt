@@ -1,0 +1,73 @@
+Player start
+if (at game start screen && player input)
+then {Start the game}
+
+
+Player Move
+if (player controller right && !player ship off the right)
+then {move player ship right}
+
+if (player controller left && !player ship off the left)
+then {move player ship left}
+
+
+Player Shoot
+if (player controller up && !bullets of the player on screen)
+then {add bullet at position of player ship and add velocity of +y}
+
+
+Enemy Move
+if (a second has passed)
+then {move enemy horzontial one unit}
+
+
+Enemy Shoot
+if (!bullet of enemy on screen)
+then {add bullet at position of random enemy ship and add velocity of -y}
+
+
+Enemy Movement Pateren
+if (enemy off right || enemy off left)
+then {put enemy down one line and reverse hoizontal velocity}
+
+
+Special Enemy
+if (random number = special set number && !special enemy on screen)
+then {spawn special enemy at the top of the screen and add horizontal veloctity}
+
+
+Bullet Impact
+if (bullet impacts enemy || bullet impacts player ship || bullet hits blockade)
+then {deystroy impacted object and bullet}
+
+
+Stray Bullets
+if (bullet goes off screen)
+then {deystroy bullet}
+
+Enemy Deystroyed
+if (enemy deystroyed)
+then {add 10 points to player score}
+
+if (enemy deystroyed && no more enemy on screen)
+then {reset enemy posistions}
+
+
+Enemy Finish Line
+if (enemy reaches player)
+then {player lives - 1, reset player ship position and reset enemy posistions}
+
+
+Player Deystroyed
+if (player deystroyed)
+then {player lives - 1 and reset player ship posistion}
+
+
+Player Lives Run Out
+if (player deystroyed && player lives = 0)
+then {game over}
+
+
+Hi-Score Check
+if (game over && player score higher then previous scores)
+then {display "Congratluations. New High Score" and allow player to input 3 initals}

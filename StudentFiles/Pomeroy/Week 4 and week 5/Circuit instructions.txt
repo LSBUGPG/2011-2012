@@ -1,0 +1,8 @@
+Player controlls Pac Man using controll pad.
+
+Pac man moves vertically (>MSB> if he is blocked by a wall he does not move > if he is unblocked he can continue collecting pips (scoring)(reigster)>
+
+Pac man moves horizontally unless blocked by wall> (Register) player carrys on next stage if all pips are collected > game over if all lives are lost.
+
+
+

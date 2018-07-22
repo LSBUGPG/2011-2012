@@ -1,0 +1,13 @@
+if(!pacman_touching_facing_border && pacman_starts_moving) then {pacman_moves;}
+if(pacman_collides_with_enemy && !has_lives) then {player_looses;}
+if(pacman_collides_with_enemy && powerup_is_activated) then {enemy_relocates_to_spawnpoint;score_points;}
+if(enemy1_touches_pacman||enemy2_touches_pacman||enemy3_touches_pacman||enemy4_touches_pacman) then {lives_decreases_by_1;}
+if(controller_left && !border_left) then {pac_man_moves_left;}
+if(controller_r && !border_r) then {pac_man_moves_r;}
+if(controller_u && !border_u) then {pac_man_moves_u;}
+if(controller_d && !border_d) then {pac_man_moves_d;}
+if(pacman_collects_coins && no_coins_are_left) then {player_wins;}
+if(pacman_picks_up_powerup) then {ghosts_flee;}
+if((pacman_moving_left && broder_left) || (pacman_moving_right && broder_right) || (pacman_moving_up && broder_up) || (pacman_moving_down && broder_down)) then {pacman_stops;}
+
+

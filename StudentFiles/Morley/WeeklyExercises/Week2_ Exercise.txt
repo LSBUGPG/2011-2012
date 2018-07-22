@@ -1,0 +1,17 @@
+Breakout! (Atari 2600)
+
+if (ball-of-left || ball-of-right) then {bounce-ball-horizontally;}
+if (ball-of-paddle) then {bounce-ball-vertically;}
+if (ball-of-top) then {half-paddle-size;bounce-ball-vertically;}
+if (ball-of-bottom) then {minus-player-score-by-one;reset-ball;}
+if (ball-hits-yellow) then {player-scores-one-points;destroy-brick;bounce-ball-horizontally;}
+if (ball-hits-green) then {player-scores-three-points;destroy-brick;bounce-ball-horizontally;}
+if (ball-hits-orange) then {player-scores-five-points;destroy-brick;bounce-ball-horizontally;bounce-speed-increase;}
+if (ball-hits-red) then {player-scores-seven-points;destroy-brick;bounce-ball-horizontally;bounce-speed-increase;}
+if (hit-count = four || hit-count = twelve) {bounce-speed-increase;}
+if (block-count = zero) {reset-blocks;}
+if (block-count = zero && blocks-have-been-reset) {end-game;}
+if (controller-left) then {move-paddle-left;}
+if (controller-right) then {move-paddle-right;}
+if (turn-count = zero) then {game-restart;}
+

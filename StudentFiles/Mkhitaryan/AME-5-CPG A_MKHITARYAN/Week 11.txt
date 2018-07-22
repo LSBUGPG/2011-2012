@@ -1,0 +1,12 @@
+What I wanted?
+
+I wanted the player to move to the left and be destroyed
+
+What actually happened?
+
+The player (Spaceship) object destroyed itself
+
+Something to improve?
+
+I would like the spaceship to destroy the asteroid instead
+

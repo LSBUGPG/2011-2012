@@ -1,0 +1,25 @@
+MODULE NAME: 
+
+Collision Detection
+
+PURPOSE: 
+
+Detects whether or not an obeject can collide with other objects.
+
+TYPES:
+
+Collision: a function that is called once two objects collide.
+
+
+FUNCTIONS:
+
+function OnTriggerEnter (other : Collider)
+
+Once collider enters trigger an action plays from memory.
+
+
+function OnCollisionEnter(collision : Collision)
+
+Once collider enters another collider an action plays from memory.
+
+ 

@@ -1,0 +1,36 @@
+Module Name: Sound
+
+Purpose:
+
+Provides a sound when the the ball his a block
+
+Types:
+
+Block: A and B for different sound effect on each block hits
+Ball: the coordinate required for the block to get hit.
+
+Functions:
+
+function start(Ball, vector: block): Ball
+
+//When the ball his a block a sound will play
+
+
+
+function sound(pos: coord, ball:block): boolean
+
+// if the ball position is correct then it will hit the block
+
+
+
+function reflectHorizontal (vector: block): block
+
+// if the ball hits the block on the horrizontal side then it will bounce
+   back in the same direction.
+
+
+
+function reflectVertical (vector: block): block
+
+// if the ball hits the block on the vertical side then it will bounce
+   back in the same direction.

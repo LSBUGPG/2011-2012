@@ -1,0 +1,17 @@
+Data stored in RAM:
+0x0001 player-y-position
+0x0002 player-y-velocity
+0x0003 enemy-position
+
+(player-y-position - enemy-position) = 0)
+set MSB=F number=0x0001
+set MSB=T a=F c=TTFFFF d=FTF
+set MSB=F number=0x0003
+set MSB=T a=T c=FFFTTT d=FFF
+result is true if negative=F
+
+destroy the player: (player-y-position = player-y-position + player-y-velocity)
+set MSB=F number=0x0002
+set MSB=T a=T c=TTFFFF d=FTF
+set MSB=F number=0x0001
+set MSB=T a=T c=FFFFTF d=FFT
